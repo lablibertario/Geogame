@@ -4,9 +4,10 @@ Geogame documentation
 UML schema
 ----------
 
-![UML schema image](http://yuml.mea2eac8a1.jpg)
+![UML schema image](http://yuml.me/a2eac8a1)  
 
-This is the current script of the previous UML chart : 
+**This is the current script of the previous UML chart :**
+
     [User]*-*[UserComment]
     [User]*-*[UserPicture]
     [User]*-*[UserQuiz]
