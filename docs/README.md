@@ -8,6 +8,8 @@ UML schema
 
 **This is the current script of the previous UML chart :**
 
+Go to [YUML website](http://yuml.me/edit/a2eac8a1) to generate to update this schema.
+
     [User]*-*[UserComment]
     [User]*-*[UserPicture]
     [User]*-*[UserQuiz]
