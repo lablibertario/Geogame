@@ -14,7 +14,6 @@
 		4E111A3E16D26DD100678700 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E111A3D16D26DD100678700 /* UserProfileViewController.m */; };
 		4E47DF5F16D7A71A008CBAFA /* UserPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E47DF5E16D7A71A008CBAFA /* UserPicture.m */; };
 		4E5AD3FA16D36FC400F8FD44 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AD3F916D36FC400F8FD44 /* Category.m */; };
-		4E5AD3FD16D375F700F8FD44 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AD3FC16D375F700F8FD44 /* User.m */; };
 		4E5BD19016D2BD7A00EBE715 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */; };
 		4E62BC9D16D3AA4D002A8604 /* UserComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E62BC9C16D3AA4D002A8604 /* UserComment.m */; };
 		4E62BCA016D3B29E002A8604 /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E62BC9F16D3B29E002A8604 /* Quiz.m */; };
@@ -74,6 +73,7 @@
 		4EE0BFDD16D254AF00D6EA5C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE0BFDC16D254AF00D6EA5C /* StoreKit.framework */; };
 		4EE0BFDF16D254B500D6EA5C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE0BFDE16D254B500D6EA5C /* SystemConfiguration.framework */; };
 		4EE0BFE316D2563E00D6EA5C /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0BFE216D2563E00D6EA5C /* Waypoint.m */; };
+		4EEC4E7117144E0400888750 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEC4E7017144E0400888750 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,8 +98,6 @@
 		4E47DF5E16D7A71A008CBAFA /* UserPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPicture.m; sourceTree = "<group>"; };
 		4E5AD3F816D36FC400F8FD44 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		4E5AD3F916D36FC400F8FD44 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
-		4E5AD3FB16D375F700F8FD44 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		4E5AD3FC16D375F700F8FD44 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		4E5BD18E16D2BD7A00EBE715 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		4E62BC9B16D3AA4D002A8604 /* UserComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserComment.h; sourceTree = "<group>"; };
@@ -183,6 +181,8 @@
 		4EE0BFDE16D254B500D6EA5C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4EE0BFE116D2563E00D6EA5C /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
 		4EE0BFE216D2563E00D6EA5C /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
+		4EEC4E6F17144E0400888750 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		4EEC4E7017144E0400888750 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,7 +258,6 @@
 			children = (
 				4ECF659A16FB90E60086BA73 /* logo@2x.png */,
 				4ECF659616FB909B0086BA73 /* logo.png */,
-				4E9E5D4516D3C07100DA4382 /* MapKit.framework */,
 				4EE0BF8116D2525A00D6EA5C /* Geogame */,
 				4EE0BFB316D2525A00D6EA5C /* GeogameTests */,
 				4EE0BF7A16D2525A00D6EA5C /* Frameworks */,
@@ -332,6 +331,7 @@
 		4EE0BFB316D2525A00D6EA5C /* GeogameTests */ = {
 			isa = PBXGroup;
 			children = (
+				4E9E5D4516D3C07100DA4382 /* MapKit.framework */,
 				4EE0BFB916D2525A00D6EA5C /* GeogameTests.h */,
 				4EE0BFBA16D2525A00D6EA5C /* GeogameTests.m */,
 				4EE0BFB416D2525A00D6EA5C /* Supporting Files */,
@@ -355,8 +355,6 @@
 				4EE0BFE216D2563E00D6EA5C /* Waypoint.m */,
 				4E5AD3F816D36FC400F8FD44 /* Category.h */,
 				4E5AD3F916D36FC400F8FD44 /* Category.m */,
-				4E5AD3FB16D375F700F8FD44 /* User.h */,
-				4E5AD3FC16D375F700F8FD44 /* User.m */,
 				4E62BC9B16D3AA4D002A8604 /* UserComment.h */,
 				4E62BC9C16D3AA4D002A8604 /* UserComment.m */,
 				4E62BC9E16D3B29E002A8604 /* Quiz.h */,
@@ -371,6 +369,8 @@
 				4E47DF5E16D7A71A008CBAFA /* UserPicture.m */,
 				4EC4AC7A16EDC4DE00EC1775 /* WaypointManager.h */,
 				4EC4AC7B16EDC4DE00EC1775 /* WaypointManager.m */,
+				4EEC4E6F17144E0400888750 /* User.h */,
+				4EEC4E7017144E0400888750 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -538,7 +538,6 @@
 				4E111A3E16D26DD100678700 /* UserProfileViewController.m in Sources */,
 				4E5BD19016D2BD7A00EBE715 /* SearchViewController.m in Sources */,
 				4E5AD3FA16D36FC400F8FD44 /* Category.m in Sources */,
-				4E5AD3FD16D375F700F8FD44 /* User.m in Sources */,
 				4E62BC9D16D3AA4D002A8604 /* UserComment.m in Sources */,
 				4E62BCA016D3B29E002A8604 /* Quiz.m in Sources */,
 				4E62BCA316D3B4A1002A8604 /* QuizQuestion.m in Sources */,
@@ -555,6 +554,7 @@
 				4E6A334316F78CB400F3A036 /* Annotation.m in Sources */,
 				4ECF659016FB6CB80086BA73 /* WaypointController.m in Sources */,
 				4ECF659316FB7D870086BA73 /* WaypointViewController.m in Sources */,
+				4EEC4E7117144E0400888750 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

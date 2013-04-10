@@ -12,24 +12,27 @@
 @interface UserComment : NSObject
 {
     NSString* _id;
-    NSString* _text;
+    NSString* _message;
     Boolean _isSafe;
     NSDate* _createdAt;
     NSDate* _updatedAt;
 }
 
 @property NSString* id;
-@property NSString* text;
+@property NSString* message;
 @property Boolean isSafe;
 @property NSDate* createdAt;
 @property NSDate* updatedAt;
 
-- (id)initWithId:(NSString*)id text:(NSString*)text isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
+- (id)initWithId:(NSString*)id message:(NSString*)message isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
 
 /**
  * Initializes a UserComment with a PFObject.
  * @see Parse Framework to get more details.
  */
 - (id)initWithPFObject:(PFObject*)object;
+
+- (void)saveAsPFObjectInBackground;
+
 
 @end

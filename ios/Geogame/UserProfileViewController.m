@@ -9,17 +9,20 @@
 #import "UserProfileViewController.h"
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
-
-@interface UserProfileViewController ()
-
-@end
+#import "AppDelegate.h"
 
 @implementation UserProfileViewController
 
+@synthesize user = _user;
 @synthesize welcomeLabel;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewDidLoad];
+    
+    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    _user = delegate.user;
+    
+    NSLog(@"User :  %@", _user.username);
     if ([PFUser currentUser]) {
         [welcomeLabel setText:[NSString stringWithFormat:@"Welcome %@!",[[PFUser currentUser] username]]];
     } else {
@@ -27,7 +30,8 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
 
 }

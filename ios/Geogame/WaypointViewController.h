@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Waypoint.h"
+#import "AppDelegate.h"
 
 @interface WaypointViewController : UIViewController <MKMapViewDelegate>
 {

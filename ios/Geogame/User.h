@@ -2,34 +2,43 @@
 //  User.h
 //  Geogame
 //
-//  Created by Mathieu Dabek on 19/02/13.
+//  Created by Mathieu Dabek on 09/04/13.
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface User : NSObject
+@interface User : PFUser
 {
+    // User's id.
     NSString* _id;
+    
+    // User's username.
     NSString* _username;
+    
+    // User's email.
     NSString* _email;
-    Boolean _emailVerified;
-    NSDate* _createdAt;
-    NSDate* _updatedAt;
+    
+    // See PFUser to get more details about pasword attribute.
+    // and other functionalities.
+    
+    // User's posted comments.
+    NSMutableArray* _comments;
+    
+    // User's published pictures.
+    NSMutableArray* _pictures;
 }
 
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* username;
 @property(nonatomic, retain) NSString* email;
-@property(nonatomic) Boolean emailVerified;
-@property(nonatomic, retain) NSDate* createdAt;
-@property(nonatomic, retain) NSDate* updatedAt;
+@property(nonatomic, retain) NSMutableArray* comments;
+@property(nonatomic, retain) NSMutableArray* pictures;
 
-/**
- * Initializes a User with a PFObject.
- * @see Parse Framework to get more details.
- */
-- (id)initWithPFObject:(PFObject*)object;
+- (id)init;
+
+- (id)initWithPFUser:(PFUser*)user;
+
+- (void)loadCommentsInBackground;
 
 @end

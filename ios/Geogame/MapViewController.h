@@ -14,7 +14,7 @@
 
 #import "Waypoint.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
     CLLocationManager *_locationManager;
     MKMapView* _mapView;

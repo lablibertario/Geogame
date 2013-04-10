@@ -7,6 +7,8 @@
 //
 
 #import "SearchViewController.h"
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface SearchViewController ()
 
@@ -27,6 +29,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    
+    if (![delegate currentUser])
+    {
+        LoginViewController *logInController = [[LoginViewController alloc] init];
+        logInController.delegate = self;
+        
+        [self presentViewController:logInController animated:YES completion:nil];
+    }
+
 	// Do any additional setup after loading the view.
 }
 

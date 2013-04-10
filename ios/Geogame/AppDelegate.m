@@ -11,12 +11,16 @@
 
 #import "Waypoint.h"
 #import "Category.h"
+#import "LoginViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize newsController = _newsController;
 @synthesize waypointController = _waypointController;
+@synthesize user = _user;
+
+@synthesize currentUser = _currentUser;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -37,6 +41,9 @@
     // Load nearest waypoints in background.
     _waypointController = [[WaypointController alloc] init];
     [_waypointController loadNearestWaypointsInBackground];
+    
+    [PFUser logOut];
+    _currentUser = [PFUser currentUser];
     
     return YES;
 }

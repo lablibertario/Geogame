@@ -7,9 +7,14 @@
 //
 
 #import <Parse/Parse.h>
+#import "User.h"
 
 @interface UserProfileViewController : UIViewController <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+{
+    User* _user;
+}
 
+@property(nonatomic, retain) User* user;
 @property (nonatomic, strong) IBOutlet UILabel *welcomeLabel;
 
 - (IBAction)logOutButtonTapAction:(id)sender;

@@ -13,7 +13,7 @@
 #import "WaypointController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
     UIWindow* _window;
     
@@ -21,10 +21,14 @@
 
     NewsController *_newsController;
     WaypointController *_waypointController;
+    
+    PFUser *_currentUser;
 }
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) NewsController *newsController;
 @property (nonatomic, strong) WaypointController *waypointController;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) PFUser *currentUser;
 
 @end

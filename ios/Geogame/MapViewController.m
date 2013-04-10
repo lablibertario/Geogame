@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MapViewController.h"
 #import "WaypointViewController.h"
+#import "LoginViewController.h"
 #import "Annotation.h"
 
 @interface MapViewController ()
@@ -31,9 +32,21 @@
 
 #pragma mark - Life cylcle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Load the controller of nearest waypoints.
+    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    
+    if (![delegate currentUser])
+    {
+        LoginViewController *logInController = [[LoginViewController alloc] init];
+        logInController.delegate = self;
+        
+        [self presentViewController:logInController animated:YES completion:nil];
+    }
     
     // Default map'region.
     MKCoordinateRegion newRegion;
@@ -55,9 +68,7 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     [_locationManager startUpdatingLocation];
     
-    // Load the controller of nearest waypoints.
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
-    _waypointController = delegate.waypointController;
+    
     
     // Load annotations.
     _annotations = [[NSMutableArray alloc] initWithCapacity:[[_waypointController waypoints] count]];
@@ -71,6 +82,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
+    
     // Focus on user location.
     MKCoordinateRegion userLocation = MKCoordinateRegionMakeWithDistance([_locationManager location].coordinate, 5000.0, 5000.0);
     [_mapView setRegion:userLocation animated:true];
@@ -199,6 +212,24 @@
         
         [waypointViewController setWaypoint:[[sender annotation] waypoint]];
     }
+}
+
+- (void)logInViewController:(PFLogInViewController *)controller didLogInUser:(PFUser *)user
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    delegate.user = [[User alloc] initWithPFUser:user];
+    
+    
+    NSLog(@"User : %@ - %@", delegate.user.username, delegate.user.email);
+    //NSLog(@"Comments : %d", [delegate.user comments].count);
+}
+
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
+{
+    NSLog(@"Need registered user ! ");
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 #pragma mark - Memory

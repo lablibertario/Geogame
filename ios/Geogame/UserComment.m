@@ -11,17 +11,17 @@
 @implementation UserComment
 
 @synthesize id = _id;
-@synthesize text = _text;
+@synthesize message = _message;
 @synthesize isSafe = _isSafe;
 @synthesize createdAt = _createdAt;
 @synthesize updatedAt =  _updatedAt;
 
-- (id)initWithId:(NSString*)id text:(NSString*)text isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt
+- (id)initWithId:(NSString*)id message:(NSString*)message isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt
 {
     if(self = [super init])
     {
         _id = id;
-        _text = text;
+        _message = message;
         _isSafe = isSafe;
         _createdAt = createdAt;
         _updatedAt = updatedAt;
@@ -35,12 +35,28 @@
     if ( self = [super init])
     {
         _id = [object objectForKey:@"id"];
-        _text = [object objectForKey:@"text"];
+        _message = [object objectForKey:@"message"];
         _isSafe = [[object objectForKey:@"isSafe"] intValue];
         _createdAt = [object objectForKey:@"createdAt"];
         _updatedAt = [object objectForKey:@"updatedAt"];
     }
     return self;
+}
+
+- (void)saveAsPFObjectInBackground
+{
+    PFObject *object = [PFObject objectWithClassName:@"UserComment"];
+    
+    
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    {
+        [object setObject:_message forKey:@"message"];
+        [object setObject:NO forKey:@"isSafe"];
+        
+        [object saveInBackground];
+        
+        NSLog(@"Save object %@ in the cloud.", object);
+    }];
 }
 
 @end

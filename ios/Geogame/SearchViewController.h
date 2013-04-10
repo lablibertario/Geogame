@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : UIViewController <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @end
