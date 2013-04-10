@@ -1,7 +1,9 @@
 Geogame
 =======
 
-A funny mobile game based on geolocation for Apple iPhone/iPad and Google Android.
+A funny mobile game based on geolocation for Apple iPhone/iPad and Google Android.  
+
+[Read the documentation](docs/README.md)
 
 Geogame for Apple iPhone/iPad
 -----------------------------
