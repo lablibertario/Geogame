@@ -9,6 +9,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Parse/Parse.h>
 
-@interface DiscoverViewController : UIViewController <CLLocationManagerDelegate>
+@interface DiscoverViewController : UIViewController <CLLocationManagerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @end

@@ -10,4 +10,25 @@
 
 @implementation Log
 
+@synthesize title = _title;
+@synthesize message = _message;
+
+- (id)init
+{
+    if(self = [super init])
+    {
+        // ..
+    }
+    
+    return self;
+}
+
+- (void)saveEventually
+{
+    PFObject *log = [PFObject objectWithClassName:@"Log"];
+    [log setObject:_title forKey:@"title"];
+    [log setObject:_message forKey:@"message"];
+    [log saveEventually];
+}
+
 @end

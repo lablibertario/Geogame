@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "WaypointViewController.h"
 #import "LoginViewController.h"
+#import "SignUpViewController.h"
 #import "Annotation.h"
 
 @interface MapViewController ()
@@ -38,14 +39,16 @@
     [super viewDidLoad];
     
     // Load the controller of nearest waypoints.
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    AppDelegate *delegate;
     
-    if (![delegate currentUser])
+    if (![[delegate user] isAuthenticated])
     {
         LoginViewController *logInController = [[LoginViewController alloc] init];
         logInController.delegate = self;
         
         [self presentViewController:logInController animated:YES completion:nil];
+        
+        return;
     }
     
     // Default map'region.
@@ -89,9 +92,9 @@
     [_mapView setRegion:userLocation animated:true];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 
 - (void)viewDidUnload
@@ -214,22 +217,44 @@
     }
 }
 
-- (void)logInViewController:(PFLogInViewController *)controller didLogInUser:(PFUser *)user
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
+{ 
+    // Dismiss login view.
+    [logInController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
-    
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
-    delegate.user = [[User alloc] initWithPFUser:user];
-    
-    
-    NSLog(@"User : %@ - %@", delegate.user.username, delegate.user.email);
-    //NSLog(@"Comments : %d", [delegate.user comments].count);
+    // Save a log in the cloud.
+    Log* log = [[Log alloc] init];
+    [log setTitle:@"Authentication error."];
+    [log setMessage:@"Connection attempt with bad credentials."];
+    [log saveEventually];
 }
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
 {
-    NSLog(@"Need registered user ! ");
-    [self dismissModalViewControllerAnimated:NO];
+    // Present new signup view.
+    SignUpViewController* signupViewController = [[SignUpViewController alloc] init];
+    [signupViewController setDelegate:self];
+    [self presentViewController:signupViewController animated:YES completion:nil];
+}
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user
+{
+    // Present new login view.
+    LoginViewController *logInController = [[LoginViewController alloc] init];
+    logInController.delegate = self;
+    [self presentViewController:logInController animated:YES completion:nil];
+}
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error
+{
+    // Save a log in the cloud.
+    Log* log = [[Log alloc] init];
+    [log setTitle:@"Registration error."];
+    [log setMessage:@"An error occured during signup process."];
+    [log saveEventually];
 }
 
 #pragma mark - Memory

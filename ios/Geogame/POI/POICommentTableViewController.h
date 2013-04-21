@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Waypoint.h"
 
-@interface POICommentTableViewController : UITableViewController
+@interface POICommentTableViewController : UITableViewController  <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+{
+    NSMutableArray* _comments;
+    Waypoint* _waypoint;
+}
+
+@property(nonatomic, retain) NSMutableArray* comments;
+@property(nonatomic, retain) Waypoint* waypoint;
 
 @end

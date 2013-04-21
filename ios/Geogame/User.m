@@ -6,14 +6,12 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "User.h"
 #import "UserComment.h"
 
 @implementation User
 
-@synthesize id = _id;
-@synthesize username = _username;
-@synthesize email = _email;
 @synthesize comments = _comments;
 @synthesize pictures = _pictures;
 
@@ -28,41 +26,33 @@
     return self;
 }
 
-- (id)initWithPFUser:(PFUser*)user
+- (void)retrieveFromCloud
 {
-    if(user == nil)
-        NSLog(@"Invalid user ! ");
     
-    if(self = [super init])
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    [query setCachePolicy:kPFCachePolicyNetworkElseCache];
+    [query whereKey:@"username" equalTo:self.username];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
     {
-        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-        [query whereKey:@"username" equalTo: user.username];
-        query.cachePolicy = kPFCachePolicyNetworkElseCache;
-        
-        // Execution of the query in a new thread.
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-         {
-             if (!error)
-             {
-                 PFObject* object = [query getFirstObject];
-                 NSLog(@"Object : %@", object);
-                 
-                 _id = [object objectForKey:@"id"];
-                 _username = [object objectForKey:@"username"];
-                 _email = [object objectForKey:@"email"];
-             }
-             else
-             {
-                 // Log details of the failure
-                 NSLog(@"Error: %@ %@", error, [error userInfo]);
-             }
-         }];
-        
-        _comments = [NSMutableArray alloc];
-        _pictures = [NSMutableArray alloc];
-    }
-    
-    return self;
+        if (!error)
+        {
+            NSLog(@"Successfully retrieved %@.", object);
+            
+            _firstname = [object objectForKey:@"firstname"];
+            _lastname = [object objectForKey:@"lastname"];
+            _birthday = [object objectForKey:@"birthday"];
+            
+            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [delegate setUser:self];
+            
+            NSLog(@"Retrieve user : %@", object);
+        }
+        else
+        {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (NSMutableArray*)comments

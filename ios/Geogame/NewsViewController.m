@@ -26,6 +26,12 @@
     // Load the controller of latest news.
     AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
     _newsController = delegate.newsController;
+    
+    // Load latest news.
+    _newsController = [[NewsController alloc] init];
+    [_newsController loadLatestNewsInBackground];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated

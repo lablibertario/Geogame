@@ -22,34 +22,24 @@
 @synthesize createdAt = _createdAt;
 @synthesize updatedAt = _updatedAt;
 
-- (id)initWithId:(NSString*)id name:(NSString*)name category:(Category*)category picture:(NSString*)picture description:(NSString*)description points:(int)points location:(CLLocationCoordinate2D)coordinate isEnabled:(Boolean)isEnabled createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt
-{
-    if(self = [super init])
-    {
-        _id = id;
-        _name = name;
-        _category = category;
-        _picture = picture;
-        _description = description;
-        _points = points;
-        _coordinate = coordinate;
-        _isEnabled = isEnabled;
-        _createdAt = createdAt;
-        _updatedAt = updatedAt;
-    }
-    return self;
-}
 
 - (id)initWithPFObject:(PFObject*)object
 {
     if ( self = [super init])
     {
+        
         _id = [object objectForKey:@"id"];
         _name = [object objectForKey:@"name"];
         _category = [object objectForKey:@"category"];
         _picture = [object objectForKey:@"picture"];
+        
+        // Download picture.
+        PFFile *picture = [object objectForKey:@"picture"];
+        _picture = [picture getData];
+        
+        
         _description = [object objectForKey:@"description"];
-        _points = [[object objectForKey:@"points"] intValue];
+        _points = [[object objectForKey:@"score"] intValue];
         CLLocationCoordinate2D coord;
         PFGeoPoint *p = [object objectForKey:@"location" ];
         coord.latitude = p.latitude;

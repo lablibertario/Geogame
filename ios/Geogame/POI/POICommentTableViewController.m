@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "POICommentTableViewController.h"
+#import "POINewCommentViewController.h"
+#import "UserComment.h"
 
 @interface POICommentTableViewController ()
 
@@ -26,12 +29,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(_waypoint == nil)
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"An error occured" message:@"Cannot load comments, please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [message show];
+        
+        return;
+    }
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // Find waypoint's comments in background.
+    PFQuery *query = [PFQuery queryWithClassName:@"UserComment"];
+#warning Ne prend pas en compte le WP.
+    [query whereKey:@"waypoint" equalTo:_waypoint];
+    query.limit = 100;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             // Parse all objects.
+             _comments = [[NSMutableArray alloc] initWithCapacity:objects.count];
+             for (int i = 0 ; i < [objects count] ; i++)
+                 [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
+             
+             NSLog(@"Comments nb : %d", [_comments count]);
+             
+             [self.tableView reloadData];
+         }
+         else
+         {
+             // Log details of the failure
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,16 +74,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [_comments count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,7 +87,8 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    UserComment* comment = [_comments objectAtIndex:indexPath.row];
+    [[cell textLabel] setText:[comment title]];
     
     return cell;
 }
@@ -116,6 +143,16 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"NewPOIComment"])
+    {
+        // Create a destination controller and add selected waypoint.
+        POINewCommentViewController *destinationViewController = [segue destinationViewController];
+        [destinationViewController setWaypoint:self.waypoint];
+    }
 }
 
 @end

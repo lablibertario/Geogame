@@ -11,34 +11,18 @@
 @implementation UserComment
 
 @synthesize id = _id;
-@synthesize message = _message;
+@synthesize title = _title;
+@synthesize body = _body;
 @synthesize isSafe = _isSafe;
-@synthesize createdAt = _createdAt;
-@synthesize updatedAt =  _updatedAt;
-
-- (id)initWithId:(NSString*)id message:(NSString*)message isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt
-{
-    if(self = [super init])
-    {
-        _id = id;
-        _message = message;
-        _isSafe = isSafe;
-        _createdAt = createdAt;
-        _updatedAt = updatedAt;
-    }
-    
-    return self;
-}
 
 - (id)initWithPFObject:(PFObject*)object
 {
     if ( self = [super init])
     {
         _id = [object objectForKey:@"id"];
-        _message = [object objectForKey:@"message"];
+        _title = [object objectForKey:@"title"];
+        _body = [object objectForKey:@"body"];
         _isSafe = [[object objectForKey:@"isSafe"] intValue];
-        _createdAt = [object objectForKey:@"createdAt"];
-        _updatedAt = [object objectForKey:@"updatedAt"];
     }
     return self;
 }
@@ -50,7 +34,11 @@
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
-        [object setObject:_message forKey:@"message"];
+        [object setObject:_title forKey:@"title"];
+        [object setObject:_body forKey:@"body"];
+        [object setObject:_user forKey:@"user"];
+        [object setObject:_waypoint forKey:@"waypoint"];
+        [object setObject:_body forKey:@"body"];
         [object setObject:NO forKey:@"isSafe"];
         
         [object saveInBackground];

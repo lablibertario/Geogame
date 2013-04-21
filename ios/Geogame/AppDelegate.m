@@ -34,16 +34,8 @@
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    // Load latest news.
-    _newsController = [[NewsController alloc] init];
-    [_newsController loadLatestNewsInBackground];
-    
-    // Load nearest waypoints in background.
-    _waypointController = [[WaypointController alloc] init];
-    [_waypointController loadNearestWaypointsInBackground];
-    
-    [PFUser logOut];
-    _currentUser = [PFUser currentUser];
+    // App tracking.
+    //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     return YES;
 }

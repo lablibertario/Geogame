@@ -8,23 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "User.h"
+#import "Waypoint.h"
 
-@interface UserComment : NSObject
+@interface UserComment : PFObject
 {
     NSString* _id;
-    NSString* _message;
+    User* _user;
+    Waypoint* _waypoint;
+    NSString* _title;
+    NSString* _body;
     Boolean _isSafe;
-    NSDate* _createdAt;
-    NSDate* _updatedAt;
 }
 
-@property NSString* id;
-@property NSString* message;
-@property Boolean isSafe;
-@property NSDate* createdAt;
-@property NSDate* updatedAt;
-
-- (id)initWithId:(NSString*)id message:(NSString*)message isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
+@property(nonatomic, retain) NSString* id;
+@property(nonatomic, retain)  User* user;
+@property(nonatomic, retain)  Waypoint* waypoint;
+@property(nonatomic, retain)  NSString* title;
+@property(nonatomic, retain)  NSString* body;
+@property(nonatomic)  Boolean isSafe;
 
 /**
  * Initializes a UserComment with a PFObject.

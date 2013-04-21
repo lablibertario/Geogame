@@ -13,15 +13,13 @@
 #import "WaypointController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     UIWindow* _window;
-    
-    User *_user;
-
     NewsController *_newsController;
     WaypointController *_waypointController;
     
+    User *_user;
     PFUser *_currentUser;
 }
 

@@ -10,7 +10,7 @@
 
 #import "NewsController.h"
 
-@interface NewsViewController : UITableViewController
+@interface NewsViewController : UITableViewController  <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
     NewsController* _newsController;
     UITableView *_tableView;

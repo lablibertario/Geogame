@@ -7,7 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface POIDetailViewController : UIViewController
+#import "Waypoint.h"
+
+@interface POIDetailViewController : UIViewController<MKMapViewDelegate>
+{
+    Waypoint* _waypoint;
+    
+    UILabel* _waypointNameLabel;
+    MKMapView* _waypointMapView;
+    UIImageView* _waypointImageView;
+    UITextView* _waypointDescriptionTextView;
+}
+
+@property(nonatomic, retain) Waypoint* waypoint;
+@property(nonatomic, retain) IBOutlet UILabel* waypointNameLabel;
+@property(nonatomic, retain) IBOutlet MKMapView* waypointMapView;
+@property(nonatomic, retain) IBOutlet UIImageView* waypointImageView;
+@property(nonatomic, retain) IBOutlet UITextView* waypointDescriptionTextView;
 
 @end

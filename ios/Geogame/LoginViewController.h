@@ -9,5 +9,10 @@
 #import <Parse/Parse.h>
 
 @interface LoginViewController : PFLogInViewController
+{
+    UIViewController* _parentController;
+}
+
+@property(nonatomic, retain) UIViewController* parentController;
 
 @end

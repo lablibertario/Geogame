@@ -49,30 +49,6 @@
 - (IBAction)checkInAction:(id)sender
 {
     NSLog(@"Check In");
-
-    PFObject *gameScore = [PFObject objectWithClassName:@"UserCheckIn"];
-    PFGeoPoint *geoPoint = [[PFGeoPoint alloc] init];
-    geoPoint.latitude = [_waypoint coordinate].latitude;
-    geoPoint.longitude = [_waypoint coordinate].longitude;
-    
-    // Load the controller of nearest waypoints.
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
-    
-    [gameScore setObject:_waypoint.id forKey:@"waypoint"];
-    [gameScore setObject:@"G7KX0jVDMN" forKey:@"user"];
-    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        
-        // Now let's update it with some new data. In this case, only cheatMode and score
-        // will get sent to the cloud. playerName hasn't changed.
-        //[gameScore setObject:[NSNumber numberWithBool:YES] forKey:@"cheatMode"];
-        //[gameScore setObject:[NSNumber numberWithInt:1338] forKey:@"score"];
-        
-        NSLog(@"Try to save in background !");
-        
-        [gameScore saveInBackground];
-        
-         NSLog(@"Saved !");
-    }];
 }
 
 #pragma mark - Annotations

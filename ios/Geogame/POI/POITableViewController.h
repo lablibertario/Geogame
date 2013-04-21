@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface POITableViewController : UITableViewController
+#import "User.h"
+
+@interface POITableViewController : UITableViewController  <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+{
+    AppDelegate* _appDelegate;
+    
+    User* _user;
+    NSMutableArray* _waypoints;
+}
+
+@property(nonatomic, retain) User* user;
+@property(nonatomic, retain) NSMutableArray* waypoints;
+
+
 
 @end

@@ -11,12 +11,12 @@
 
 @class Category;
 
-@interface Waypoint : NSObject
+@interface Waypoint : PFObject
 {
     NSString* _id;
     NSString* _name;
     Category* _category;
-    NSString* _picture;
+    NSData* _picture;
     NSString* _description;
     CLLocationCoordinate2D _coordinate;
     int _points;
@@ -28,18 +28,13 @@
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* name;
 @property(nonatomic, retain) Category* category;
-@property(nonatomic, retain) NSString* picture;
+@property(nonatomic, retain) NSData* picture;
 @property(nonatomic, retain) NSString* description;
 @property(nonatomic) int points;
 @property(nonatomic) CLLocationCoordinate2D coordinate;
 @property(nonatomic) Boolean isEnabled;
 @property(nonatomic, retain) NSDate* createdAt;
 @property(nonatomic, retain) NSDate* updatedAt;
-
-/**
- * Initializes a Waypoint with all parameters.
- */
-- (id)initWithId:(NSString*)id name:(NSString*)name category:(Category*)category picture:(NSString*)picture description:(NSString*)description points:(int)points location:(CLLocationCoordinate2D)coordinate isEnabled:(Boolean)isEnabled createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
 
 /**
  * Initializes a Waypoint with a PFObject.

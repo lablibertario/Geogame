@@ -10,11 +10,15 @@
 
 @implementation POITableViewCell
 
+@synthesize waypointImageView = _waypointImageView;
+@synthesize waypointNameLabel = _waypointNameLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
+        
     }
     return self;
 }

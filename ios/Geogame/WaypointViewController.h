@@ -11,7 +11,7 @@
 #import "Waypoint.h"
 #import "AppDelegate.h"
 
-@interface WaypointViewController : UIViewController <MKMapViewDelegate>
+@interface WaypointViewController : UIViewController <MKMapViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
     Waypoint *_waypoint;
     

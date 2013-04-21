@@ -9,5 +9,14 @@
 #import <Parse/Parse.h>
 
 @interface Log : PFObject
+{
+    NSString* _title;
+    NSString* _message;
+}
+
+@property(nonatomic, retain) NSString* title;
+@property(nonatomic, retain) NSString* message;
+
+- (id)init;
 
 @end

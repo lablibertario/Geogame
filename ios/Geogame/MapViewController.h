@@ -13,6 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "Waypoint.h"
+#import "Log.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {

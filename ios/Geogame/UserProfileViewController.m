@@ -13,20 +13,20 @@
 
 @implementation UserProfileViewController
 
+@synthesize appDelegate = _appDelegate;
 @synthesize user = _user;
 @synthesize welcomeLabel;
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
-    _user = delegate.user;
-    
-    NSLog(@"User :  %@", _user.username);
-    if ([PFUser currentUser]) {
-        [welcomeLabel setText:[NSString stringWithFormat:@"Welcome %@!",[[PFUser currentUser] username]]];
-    } else {
-        [welcomeLabel setText:@"Not logged in"];
+    if (![_appDelegate currentUser])
+    {
+        LoginViewController *logInController = [[LoginViewController alloc] init];
+        logInController.delegate = _appDelegate;
+        
+        [self presentViewController:logInController animated:YES completion:nil];
     }
 }
 
@@ -39,9 +39,14 @@
 
 #pragma mark - Logout button handler
 
-- (IBAction)logOutButtonTapAction:(id)sender {
+- (IBAction)logOutButtonTapAction:(id)sender
+{
     [PFUser logOut];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    loginViewController.delegate = _appDelegate;
+    [self presentViewController:loginViewController animated:YES completion:nil];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - PFLogInViewControllerDelegate

@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface POITableViewCell : UITableViewCell
+{
+    UILabel* _waypointNameLabel;
+    UIImageView* _waypointImageView;
+    
+}
+
+@property(nonatomic, retain) IBOutlet UILabel* waypointNameLabel;
+@property(nonatomic, retain) IBOutlet UIImageView* waypointImageView;
 
 @end
