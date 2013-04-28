@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,6 +17,9 @@ public class User
 	private String _email;
 	private Date _createdAt;
 	private Date _updatedAt;
+	private ArrayList<UserComment> _userComments;
+	private ArrayList<UserPicture> _userPictures;
+	private UserProfile _userProfile;
 	private boolean _isEnabled;
 	
 	private UserProfile _profile;
