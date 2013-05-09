@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
-@interface QuizAnswer : NSObject
+@interface QuizAnswer : PFObject <PFSubclassing>
+
++ (NSString *)parseClassName;
 
 @end

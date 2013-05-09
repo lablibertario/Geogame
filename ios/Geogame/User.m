@@ -15,6 +15,10 @@
 @synthesize picture = _picture;
 @synthesize comments = _comments;
 @synthesize pictures = _pictures;
+@synthesize birthday = _birthday;
+@synthesize lastname = _lastname;
+@synthesize firstname = _firstname;
+@synthesize coordinate = _coordinate;
 
 - (id)init
 {

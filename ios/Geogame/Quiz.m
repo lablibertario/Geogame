@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
+
 #import "Quiz.h"
 
 @implementation Quiz
@@ -30,6 +32,11 @@
         _updatedAt = [object objectForKey:@"updatedAt"];
     }
     return self;
+}
+
++ (NSString *)parseClassName
+{
+    return @"Quiz";
 }
 
 @end

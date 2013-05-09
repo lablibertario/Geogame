@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
+
 #import "UserComment.h"
 
 @implementation UserComment
@@ -14,6 +16,8 @@
 @synthesize title = _title;
 @synthesize body = _body;
 @synthesize isSafe = _isSafe;
+@synthesize user = _user;
+@synthesize waypoint = _waypoint;
 
 - (id)initWithPFObject:(PFObject*)object
 {
@@ -45,6 +49,11 @@
         
         NSLog(@"Save object %@ in the cloud.", object);
     }];
+}
+
++ (NSString *)parseClassName
+{
+    return @"UserComment";
 }
 
 @end

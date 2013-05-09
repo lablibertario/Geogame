@@ -6,8 +6,15 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
+
 #import "QuizAnswer.h"
 
 @implementation QuizAnswer
+
++ (NSString *)parseClassName
+{
+    return @"QuizAnswer";
+}
 
 @end

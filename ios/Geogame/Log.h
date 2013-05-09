@@ -8,7 +8,7 @@
 
 #import <Parse/Parse.h>
 
-@interface Log : PFObject
+@interface Log : PFObject <PFSubclassing>
 {
     NSString* _title;
     NSString* _message;
@@ -18,5 +18,7 @@
 @property(nonatomic, retain) NSString* message;
 
 - (id)init;
+
++ (NSString *)parseClassName;
 
 @end

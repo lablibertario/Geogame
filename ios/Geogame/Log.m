@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
 #import "Log.h"
+
+
 
 @implementation Log
 
@@ -29,6 +32,11 @@
     [log setObject:_title forKey:@"title"];
     [log setObject:_message forKey:@"message"];
     [log saveEventually];
+}
+
++ (NSString *)parseClassName
+{
+    return @"Log";
 }
 
 @end

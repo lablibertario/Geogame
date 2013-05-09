@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface News : PFObject
+@interface News : PFObject <PFSubclassing>
 {
     NSString* _id;
     NSString* _title;
@@ -27,5 +27,7 @@
 @property(nonatomic, retain) NSDate* updatedAt;
 
 - (id)initWithPFObject:(PFObject*)object;
+
++ (NSString *)parseClassName;
 
 @end

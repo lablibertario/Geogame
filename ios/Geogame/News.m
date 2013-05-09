@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
+
 #import "News.h"
 
 @implementation News
@@ -31,6 +33,11 @@
     }
     
     return self;
+}
+
++ (NSString *)parseClassName
+{
+    return @"News";
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface UserPicture : NSObject
+@interface UserPicture : PFObject <PFSubclassing>
 {
     NSString* _id;
     NSData* _image;
@@ -25,5 +25,7 @@
 @property(nonatomic, retain) NSDate* updatedAt;
 
 - (id)initWithPFObject:(PFObject*)object;
+
++ (NSString *)parseClassName;
 
 @end

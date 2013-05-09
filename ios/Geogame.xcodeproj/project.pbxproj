@@ -30,7 +30,6 @@
 		4E9E5D4916D3C5CD00DA4382 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */; };
 		4EA34C8516EFABAE0073C440 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA34C8416EFABAE0073C440 /* DiscoverViewController.m */; };
 		4EA34C8816EFAD3A0073C440 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA34C8716EFAD3A0073C440 /* DetailViewController.m */; };
-		4EC4AC7C16EDC4DE00EC1775 /* WaypointManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4AC7B16EDC4DE00EC1775 /* WaypointManager.m */; };
 		4ECF658D16FB4F1C0086BA73 /* green_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECF658C16FB4F1C0086BA73 /* green_pin.png */; };
 		4ECF659016FB6CB80086BA73 /* WaypointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECF658F16FB6CB80086BA73 /* WaypointController.m */; };
 		4ECF659316FB7D870086BA73 /* WaypointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECF659216FB7D860086BA73 /* WaypointViewController.m */; };
@@ -149,8 +148,6 @@
 		4EA34C8416EFABAE0073C440 /* DiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
 		4EA34C8616EFAD3A0073C440 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		4EA34C8716EFAD3A0073C440 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		4EC4AC7A16EDC4DE00EC1775 /* WaypointManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaypointManager.h; sourceTree = "<group>"; };
-		4EC4AC7B16EDC4DE00EC1775 /* WaypointManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaypointManager.m; sourceTree = "<group>"; };
 		4ECF658C16FB4F1C0086BA73 /* green_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_pin.png; sourceTree = "<group>"; };
 		4ECF658E16FB6CB80086BA73 /* WaypointController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaypointController.h; sourceTree = "<group>"; };
 		4ECF658F16FB6CB80086BA73 /* WaypointController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaypointController.m; sourceTree = "<group>"; };
@@ -277,81 +274,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4E1FC7161720505E004DD9C3 /* User */ = {
+		4E3CB88A173BE72B00C93967 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				4E62BC9B16D3AA4D002A8604 /* UserComment.h */,
-				4E62BC9C16D3AA4D002A8604 /* UserComment.m */,
-				4E47DF5D16D7A71A008CBAFA /* UserPicture.h */,
-				4E47DF5E16D7A71A008CBAFA /* UserPicture.m */,
-				4EEC4E6F17144E0400888750 /* User.h */,
-				4EEC4E7017144E0400888750 /* User.m */,
+				4EE0BF8A16D2525A00D6EA5C /* AppDelegate.h */,
+				4EE0BF8B16D2525A00D6EA5C /* AppDelegate.m */,
 			);
-			name = User;
+			name = Delegate;
 			sourceTree = "<group>";
 		};
 		4ECF659C16FB92980086BA73 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4ED635A21722A19E009B07BF /* User */,
-				4E5BD18E16D2BD7A00EBE715 /* SearchViewController.h */,
-				4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */,
-				4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */,
-				4E85CCA316D6989C00FBD69B /* NewsViewController.h */,
-				4E85CCA416D6989C00FBD69B /* NewsViewController.m */,
-				4E85CCAC16D6A27400FBD69B /* NewsDetailViewController.h */,
-				4E85CCAD16D6A27400FBD69B /* NewsDetailViewController.m */,
+				4EA34C8616EFAD3A0073C440 /* DetailViewController.h */,
+				4EA34C8716EFAD3A0073C440 /* DetailViewController.m */,
 				4EA34C8316EFABAE0073C440 /* DiscoverViewController.h */,
 				4EA34C8416EFABAE0073C440 /* DiscoverViewController.m */,
-				4EA34C8616EFAD3A0073C440 /* DetailViewController.h */,
-				4E9E5D4716D3C5CD00DA4382 /* MapViewController.h */,
-				4EA34C8716EFAD3A0073C440 /* DetailViewController.m */,
-				4ECF659116FB7D860086BA73 /* WaypointViewController.h */,
-				4ECF659216FB7D860086BA73 /* WaypointViewController.m */,
-				4ED63591172298BD009B07BF /* POI */,
-				4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */,
-				4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */,
-			);
-			name = "View Controller";
-			sourceTree = "<group>";
-		};
-		4ED63591172298BD009B07BF /* POI */ = {
-			isa = PBXGroup;
-			children = (
-				4EE0780F17231F4F005110FD /* POICommentTableViewController.h */,
-				4EE0781017231F4F005110FD /* POICommentTableViewController.m */,
-				4ED6358E172298AE009B07BF /* POITableViewController.h */,
-				4ED6358F172298AE009B07BF /* POITableViewController.m */,
-				4ED635921722990E009B07BF /* POITableViewCell.h */,
-				4ED635931722990E009B07BF /* POITableViewCell.m */,
-				4ED921191723AE1F00BC2B81 /* POINewCommentViewController.h */,
-				4ED9211A1723AE1F00BC2B81 /* POINewCommentViewController.m */,
-				4ED9211C1723F16900BC2B81 /* POIDetailViewController.h */,
-				4ED6359F17229EA2009B07BF /* BgLeather@2x.png */,
-				4ED9211D1723F16A00BC2B81 /* POIDetailViewController.m */,
-			);
-			name = POI;
-			sourceTree = "<group>";
-		};
-		4ED6359517229E16009B07BF /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				4ED6359E17229EA2009B07BF /* BgLeather.png */,
-				4ED6359817229E39009B07BF /* iconTimelineSelected.png */,
-				4ED6359617229E39009B07BF /* iconTimeline.png */,
-				4ED6359717229E39009B07BF /* iconTimeline@2x.png */,
-				4ED6359917229E39009B07BF /* iconTimelineSelected@2x.png */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
-		4ED635A21722A19E009B07BF /* User */ = {
-			isa = PBXGroup;
-			children = (
 				4E111A3616D2596400678700 /* LoginViewController.h */,
 				4E111A3716D2596400678700 /* LoginViewController.m */,
-				4E80E50217216C5100DC9C45 /* UserViewController.h */,
-				4E80E50317216C5100DC9C45 /* UserViewController.m */,
+				4E9E5D4716D3C5CD00DA4382 /* MapViewController.h */,
+				4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */,
+				4E85CCAC16D6A27400FBD69B /* NewsDetailViewController.h */,
+				4E85CCAD16D6A27400FBD69B /* NewsDetailViewController.m */,
+				4E85CCA316D6989C00FBD69B /* NewsViewController.h */,
+				4E85CCA416D6989C00FBD69B /* NewsViewController.m */,
+				4EE0780F17231F4F005110FD /* POICommentTableViewController.h */,
+				4EE0781017231F4F005110FD /* POICommentTableViewController.m */,
+				4ED9211C1723F16900BC2B81 /* POIDetailViewController.h */,
+				4ED9211D1723F16A00BC2B81 /* POIDetailViewController.m */,
+				4ED921191723AE1F00BC2B81 /* POINewCommentViewController.h */,
+				4ED9211A1723AE1F00BC2B81 /* POINewCommentViewController.m */,
+				4ED635921722990E009B07BF /* POITableViewCell.h */,
+				4ED635931722990E009B07BF /* POITableViewCell.m */,
+				4ED6358E172298AE009B07BF /* POITableViewController.h */,
+				4ED6358F172298AE009B07BF /* POITableViewController.m */,
+				4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */,
+				4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */,
+				4E5BD18E16D2BD7A00EBE715 /* SearchViewController.h */,
+				4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */,
 				4E80E5051721729E00DC9C45 /* SignUpViewController.h */,
 				4E80E5061721729E00DC9C45 /* SignUpViewController.m */,
 				4E80E50E17217DCE00DC9C45 /* UserActivityTableViewController.h */,
@@ -364,8 +324,38 @@
 				4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */,
 				4EDE04DC1726E53700C0F1FF /* UserProfileEditPictureViewController.h */,
 				4EDE04DD1726E53700C0F1FF /* UserProfileEditPictureViewController.m */,
+				4E80E50217216C5100DC9C45 /* UserViewController.h */,
+				4E80E50317216C5100DC9C45 /* UserViewController.m */,
+				4ECF659116FB7D860086BA73 /* WaypointViewController.h */,
+				4ECF659216FB7D860086BA73 /* WaypointViewController.m */,
 			);
-			name = User;
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		4ED6359517229E16009B07BF /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4ED6359F17229EA2009B07BF /* BgLeather@2x.png */,
+				4ED635A31722A29A009B07BF /* backgroundNavigationBar.png */,
+				4ED635A41722A29A009B07BF /* backgroundNavigationBar@2x.png */,
+				4ED635A51722A29A009B07BF /* backgroundTabBar.png */,
+				4ED635A61722A29A009B07BF /* backgroundTabBar@2x.png */,
+				4E08BBDA16D4D53F00777896 /* map.png */,
+				4E08BBDC16D4D71B00777896 /* map@2x.png */,
+				4ED6359E17229EA2009B07BF /* BgLeather.png */,
+				4ED6359817229E39009B07BF /* iconTimelineSelected.png */,
+				4ED6359617229E39009B07BF /* iconTimeline.png */,
+				4ED6359717229E39009B07BF /* iconTimeline@2x.png */,
+				4ECF659816FB90C10086BA73 /* logo@2x.png */,
+				4ED6359917229E39009B07BF /* iconTimelineSelected@2x.png */,
+				4EE0BF9C16D2525A00D6EA5C /* first.png */,
+				4E08BBDE16D4DA5600777896 /* man.png */,
+				4EE0BF9E16D2525A00D6EA5C /* first@2x.png */,
+				4ECF659416FB90570086BA73 /* logo.png */,
+				4EE0BFA316D2525A00D6EA5C /* second.png */,
+				4EE0BFA516D2525A00D6EA5C /* second@2x.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		4EE0BF6F16D2525A00D6EA5C = {
@@ -417,12 +407,11 @@
 		4EE0BF8116D2525A00D6EA5C /* Geogame */ = {
 			isa = PBXGroup;
 			children = (
-				4ECF659C16FB92980086BA73 /* View Controller */,
 				4EE0BFE516D2587700D6EA5C /* Controller */,
-				4EE0BFE416D2587000D6EA5C /* View */,
+				4E3CB88A173BE72B00C93967 /* Delegate */,
 				4EE0BFE016D255DA00D6EA5C /* Model */,
-				4EE0BF8A16D2525A00D6EA5C /* AppDelegate.h */,
-				4EE0BF8B16D2525A00D6EA5C /* AppDelegate.m */,
+				4EE0BFE416D2587000D6EA5C /* View */,
+				4ECF659C16FB92980086BA73 /* View Controller */,
 				4EE0BF8216D2525A00D6EA5C /* Supporting Files */,
 			);
 			path = Geogame;
@@ -467,21 +456,26 @@
 		4EE0BFE016D255DA00D6EA5C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4E1FC7161720505E004DD9C3 /* User */,
-				4EE0BFE116D2563E00D6EA5C /* Waypoint.h */,
-				4EE0BFE216D2563E00D6EA5C /* Waypoint.m */,
 				4E5AD3F816D36FC400F8FD44 /* Category.h */,
 				4E5AD3F916D36FC400F8FD44 /* Category.m */,
-				4E62BC9E16D3B29E002A8604 /* Quiz.h */,
-				4E62BCA216D3B4A1002A8604 /* QuizQuestion.m */,
-				4E62BCA416D3B521002A8604 /* QuizAnswer.h */,
-				4E62BCA516D3B521002A8604 /* QuizAnswer.m */,
-				4E85CCA616D6991600FBD69B /* News.h */,
-				4E85CCA716D6991600FBD69B /* News.m */,
-				4EC4AC7A16EDC4DE00EC1775 /* WaypointManager.h */,
-				4EC4AC7B16EDC4DE00EC1775 /* WaypointManager.m */,
 				4EE4ED151724447300B1E609 /* Log.h */,
 				4EE4ED161724447300B1E609 /* Log.m */,
+				4E85CCA616D6991600FBD69B /* News.h */,
+				4E85CCA716D6991600FBD69B /* News.m */,
+				4E62BC9E16D3B29E002A8604 /* Quiz.h */,
+				4E62BC9F16D3B29E002A8604 /* Quiz.m */,
+				4E62BCA416D3B521002A8604 /* QuizAnswer.h */,
+				4E62BCA516D3B521002A8604 /* QuizAnswer.m */,
+				4E62BCA116D3B4A1002A8604 /* QuizQuestion.h */,
+				4E62BCA216D3B4A1002A8604 /* QuizQuestion.m */,
+				4EEC4E6F17144E0400888750 /* User.h */,
+				4EEC4E7017144E0400888750 /* User.m */,
+				4E62BC9B16D3AA4D002A8604 /* UserComment.h */,
+				4E62BC9C16D3AA4D002A8604 /* UserComment.m */,
+				4E47DF5D16D7A71A008CBAFA /* UserPicture.h */,
+				4E47DF5E16D7A71A008CBAFA /* UserPicture.m */,
+				4EE0BFE116D2563E00D6EA5C /* Waypoint.h */,
+				4EE0BFE216D2563E00D6EA5C /* Waypoint.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -490,23 +484,8 @@
 			isa = PBXGroup;
 			children = (
 				4ED6359517229E16009B07BF /* Assets */,
-				4E62BCA116D3B4A1002A8604 /* QuizQuestion.h */,
-				4E08BBDA16D4D53F00777896 /* map.png */,
-				4E08BBDC16D4D71B00777896 /* map@2x.png */,
-				4E62BC9F16D3B29E002A8604 /* Quiz.m */,
-				4ED635A31722A29A009B07BF /* backgroundNavigationBar.png */,
-				4ED635A41722A29A009B07BF /* backgroundNavigationBar@2x.png */,
-				4ED635A51722A29A009B07BF /* backgroundTabBar.png */,
-				4ED635A61722A29A009B07BF /* backgroundTabBar@2x.png */,
 				4EE0BF9316D2525A00D6EA5C /* MainStoryboard_iPhone.storyboard */,
-				4ECF659816FB90C10086BA73 /* logo@2x.png */,
 				4EE0BF9616D2525A00D6EA5C /* MainStoryboard_iPad.storyboard */,
-				4EE0BF9C16D2525A00D6EA5C /* first.png */,
-				4E08BBDE16D4DA5600777896 /* man.png */,
-				4EE0BF9E16D2525A00D6EA5C /* first@2x.png */,
-				4ECF659416FB90570086BA73 /* logo.png */,
-				4EE0BFA316D2525A00D6EA5C /* second.png */,
-				4EE0BFA516D2525A00D6EA5C /* second@2x.png */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -514,11 +493,11 @@
 		4EE0BFE516D2587700D6EA5C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4ECF658E16FB6CB80086BA73 /* WaypointController.h */,
-				4E85CCA916D69BCE00FBD69B /* NewsController.h */,
-				4E85CCAA16D69BCE00FBD69B /* NewsController.m */,
 				4E6A334116F78CB400F3A036 /* Annotation.h */,
 				4E6A334216F78CB400F3A036 /* Annotation.m */,
+				4E85CCA916D69BCE00FBD69B /* NewsController.h */,
+				4E85CCAA16D69BCE00FBD69B /* NewsController.m */,
+				4ECF658E16FB6CB80086BA73 /* WaypointController.h */,
 				4ECF658F16FB6CB80086BA73 /* WaypointController.m */,
 			);
 			name = Controller;
@@ -673,7 +652,6 @@
 				4E85CCAB16D69BCE00FBD69B /* NewsController.m in Sources */,
 				4E85CCAE16D6A27400FBD69B /* NewsDetailViewController.m in Sources */,
 				4E47DF5F16D7A71A008CBAFA /* UserPicture.m in Sources */,
-				4EC4AC7C16EDC4DE00EC1775 /* WaypointManager.m in Sources */,
 				4EA34C8516EFABAE0073C440 /* DiscoverViewController.m in Sources */,
 				4EA34C8816EFAD3A0073C440 /* DetailViewController.m in Sources */,
 				4E6A334316F78CB400F3A036 /* Annotation.m in Sources */,

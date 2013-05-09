@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
 #import "UserPicture.h"
 
 @implementation UserPicture
@@ -28,6 +29,11 @@
     }
     
     return self;
+}
+
++ (NSString *)parseClassName
+{
+    return @"UserPicture";
 }
 
 @end

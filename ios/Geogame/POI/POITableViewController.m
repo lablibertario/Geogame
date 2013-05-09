@@ -159,16 +159,6 @@
              
              // Reload table view.
              [self.tableView reloadData];
-             
-             /*
-             CATransition *animation = [CATransition animation];
-             [animation setType:kCATransitionPush];
-             [animation setSubtype:kCATransitionFromBottom];
-             [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-             [animation setFillMode:kCAFillModeBoth];
-             [animation setDuration:.3];
-             [[self view] addAnimation:animation forKey:@"UITableViewReloadDataAnimationKey"];
-              */
          }
          else
          {
@@ -179,6 +169,7 @@
 
     // Stop table refresh activity indicator.
     [self.refreshControl endRefreshing];
+    [self.refreshControl setHidden:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -195,7 +195,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserProfileImageCell" rowHeight="120" id="FCp-UD-IEQ" customClass="UserPictureTableViewCell">
+                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserProfileImageCell" editingAccessoryType="disclosureIndicator" rowHeight="120" id="FCp-UD-IEQ" customClass="UserPictureTableViewCell">
                                 <rect key="frame" x="0.0" y="46" width="320" height="121"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -229,7 +229,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="userImageView" destination="xsu-BH-GnA" id="cIz-ET-p2G"/>
-                                    <segue destination="smG-La-c7Q" kind="push" id="JCl-7G-j7C"/>
+                                    <segue destination="smG-La-c7Q" kind="push" identifier="ShowUserPictureSegue" id="JCl-7G-j7C"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserProfileTextCell" textLabel="umC-kK-8Yb" detailTextLabel="nRk-Rs-VTg" style="IBUITableViewCellStyleValue1" id="0Q1-wF-7zk">
@@ -323,14 +323,23 @@
             </objects>
             <point key="canvasLocation" x="1916" y="1100"/>
         </scene>
-        <!--View Controller - Update picture-->
+        <!--User Profile Edit Picture View Controller - Update picture-->
         <scene sceneID="lga-rV-Hwv">
             <objects>
-                <viewController id="smG-La-c7Q" sceneMemberID="viewController">
+                <viewController id="smG-La-c7Q" customClass="UserProfileEditPictureViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2ye-fz-loK">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="BaF-13-oxy">
+                                <color key="color" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BaF-13-oxy" firstAttribute="centerX" secondItem="2ye-fz-loK" secondAttribute="centerX" type="default" id="OiO-VX-uXv"/>
+                            <constraint firstItem="BaF-13-oxy" firstAttribute="top" secondItem="2ye-fz-loK" secondAttribute="top" constant="218" id="rsq-4D-Yg0"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Update picture" id="U6B-wo-0V5"/>
                 </viewController>
@@ -623,7 +632,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         </pickerView>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="148" id="CVN-5S-l2l" customClass="QuizQuestionCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="QuestionCell" rowHeight="148" id="CVN-5S-l2l" customClass="QuizQuestionCell">
                                 <rect key="frame" x="0.0" y="46" width="320" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1024,6 +1033,13 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserPictureTableViewCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="userImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="UserProfileEditPictureViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileEditPictureViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonClicked"/>
+                <relationship kind="outlet" name="selectedImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="UserViewController" superclassName="UIViewController">

@@ -11,7 +11,7 @@
 
 @class Waypoint;
 
-@interface Category : NSObject
+@interface Category : PFObject <PFSubclassing>
 {
     NSString* _id;
     NSString* _name;
@@ -19,8 +19,6 @@
     NSMutableArray* _children;
     NSMutableArray* _waypoints;
     Boolean _isEnabled;
-    NSDate* _createdAt;
-    NSDate* _updatedAt;
 }
 
 @property(nonatomic, retain) NSString* id;
@@ -29,13 +27,6 @@
 @property(nonatomic, retain) NSMutableArray* children;
 @property(nonatomic, retain) NSMutableArray* waypoints;
 @property(nonatomic) Boolean isEnabled;
-@property(nonatomic, retain) NSDate* createdAt;
-@property(nonatomic, retain) NSDate* updatedAt;
-
-/**
- * Initializes a Category with all parameters.
- */
-- (id)initWithId:(NSString*)id name:(NSString*)name parent:(Category*)parent children:(NSMutableArray*)children waypoints:(NSMutableArray*)waypoints isEnabled:(Boolean)isEnabled createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
 
 /**
  * Initializes a Category with a PFObject.
@@ -54,5 +45,7 @@
 - (void)addCategory:(Category*)category;
 
 - (NSString*)toString;
+
++ (NSString *)parseClassName;
 
 @end

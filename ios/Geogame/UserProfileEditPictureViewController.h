@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
-@interface UserProfileEditPictureViewController : UIViewController <UIImagePickerControllerDelegate>
+@interface UserProfileEditPictureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     UIImagePickerController *picker;
     IBOutlet UIImageView * selectedImage;
+    
+    User* _user;
 }
 
 @property (nonatomic, retain) UIImageView * selectedImage;
+@property (nonatomic, retain) User* user;
 
 - (IBAction) buttonClicked;
 

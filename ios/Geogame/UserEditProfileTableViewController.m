@@ -6,9 +6,12 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+
+
 #import "AppDelegate.h"
 
 #import "UserEditProfileTableViewController.h"
+#import "UserProfileEditPictureViewController.h"
 #import "UserPictureTableViewCell.h"
 #import "UserProfileDeleteTableCell.h"
 
@@ -21,11 +24,23 @@
     [super viewDidLoad];
     
     _user = (User*)[User currentUser];
+    
+    [_user addObserver:self forKeyPath:@"user" options:NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"User changed.");
 }
 
 #pragma mark - Table view data source
@@ -259,7 +274,7 @@
         // User's picture.
         case 0:
         {
-            
+
         }
         default:
             break;
@@ -273,5 +288,19 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShowUserPictureSegue"])
+    {
+        // Create a destination controller and add selected waypoint.
+        UserProfileEditPictureViewController *destinationViewController = [segue destinationViewController];
+        [destinationViewController setUser:_user];
+    }
+}
+
+
 
 @end

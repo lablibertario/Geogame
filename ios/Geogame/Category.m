@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
+
 #import "Category.h"
 
 @implementation Category
@@ -18,22 +20,6 @@
 @synthesize isEnabled = _isEnabled;
 @synthesize createdAt = _createdAt;
 @synthesize updatedAt = _updatedAt;
-
-- (id)initWithId:(NSString*)id name:(NSString*)name parent:(Category*)parent children:(NSMutableArray*)children waypoints:(NSMutableArray*)waypoints isEnabled:(Boolean)isEnabled createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt
-{
-    if(self = [super init])
-    {
-        _id = id;
-        _name = name;
-        _parent = parent;
-        _children = children;
-        _waypoints = waypoints;
-        _isEnabled = isEnabled;
-        _createdAt = createdAt;
-        _updatedAt = updatedAt;
-    }
-    return self;
-}
 
 - (id)initWithPFObject:(PFObject*)object
 {
@@ -63,6 +49,11 @@
 - (NSString*)toString
 {
     return [[NSString alloc] initWithFormat:@"%@ - [%lu sub categories / %lu waypoints]",_name,(unsigned long)[_children count], (unsigned long)[_waypoints count]];
+}
+
++ (NSString *)parseClassName
+{
+    return @"Category";
 }
 
 @end

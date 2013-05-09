@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface Quiz : NSObject
+@interface Quiz : PFObject <PFSubclassing>
 {
     NSString* _id;
     NSString* _name;
@@ -23,9 +23,9 @@
 @property NSString* name;
 @property NSMutableDictionary* questions;
 @property bool isEnabled;
-@property NSDate* createdAt;
-@property NSDate* updatedAt;
 
 - (id)initWithPFObject:(PFObject*)object;
+
++ (NSString *)parseClassName;
 
 @end

@@ -9,8 +9,17 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 
-#import "Waypoint.h"
 #import "Category.h"
+#import "Log.h"
+#import "Waypoint.h"
+#import "User.h"
+#import "UserComment.h"
+#import "UserPicture.h"
+#import "News.h"
+#import "Quiz.h"
+#import "QuizAnswer.h"
+#import "QuizQuestion.h"
+
 #import "LoginViewController.h"
 
 @implementation AppDelegate
@@ -25,11 +34,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[Waypoint registerSubclass];
+    [Waypoint registerSubclass];
+    [User registerSubclass];
+    [UserComment registerSubclass];
+    [UserPicture registerSubclass];
+    [Quiz registerSubclass];
+    [QuizQuestion registerSubclass];
+    [QuizAnswer registerSubclass];
+    [News registerSubclass];
+    [Category registerSubclass];
+    [Log registerSubclass];
     
     // Setup auth with Parse, Facebook and Twitter.
     [Parse setApplicationId:@"3XwbhTy5xG8aB2w3R13MWIopSrDT8e8VNuVczaww" clientKey:@"gpsOemsV8zDZQ8l9oh4tvmyCBxITBXPaqO7kRdQG"];
-    [PFFacebookUtils initializeWithApplicationId:@"488060031252333"];
+    //[PFFacebookUtils initializeWithApplicationId:@"488060031252333"];
     //[PFTwitterUtils initializeWithConsumerKey:@"your_twitter_consumer_key" consumerSecret:@"your_twitter_consumer_secret"];
     
     // Set default ACLs
@@ -80,26 +98,18 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return [PFFacebookUtils handleOpenURL:url];
-}
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return [PFFacebookUtils handleOpenURL:url];
-}
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     // Ignore if new locaiton is near old location.
-    //if([oldLocation distanceFromLocation:newLocation] < 2)
-    //    return;
+    if([oldLocation distanceFromLocation:newLocation] < 2)
+        return;
     
     NSLog(@"Location counter : %d", _locationCounter);
     
     // Save every 10 updates.
-    //while(_locationCounter++ < 10) return;
+    while(_locationCounter++ < 10) return;
     
     // Reset counter.
     _locationCounter = 0;

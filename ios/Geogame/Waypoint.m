@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
-//#import <Parse/PFObject+Subclass.h>
+#import <Parse/PFObject+Subclass.h>
 #import "Waypoint.h"
 
 @implementation Waypoint
@@ -30,15 +30,21 @@
         [self setObjectId:[object objectForKey:@"objectId"]];
 
         NSLog(@"Object for key : %@", [object objectForKey:@"objectId"]);
-        NSLog(@"Object ID : %@", self.objectId);
-        _id = [object objectForKey:@"id"];
+        NSLog(@"Object ID : %@", self.id);
+        _id = [object objectForKey:@"objectId"];
+        NSLog(@"Object ID : %@", _id);
         _name = [object objectForKey:@"name"];
         _category = [object objectForKey:@"category"];
         _picture = [object objectForKey:@"picture"];
         
         // Download picture.
         PFFile *picture = [object objectForKey:@"picture"];
-        _picture = [picture getData];
+        [picture getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if(!error)
+                _picture = data;
+            else
+                NSLog(@"Unable to load the picture of : %@", _name);
+        }];
         
         
         _description = [object objectForKey:@"description"];
@@ -60,7 +66,8 @@
     return [[NSString alloc] initWithFormat:@"%@ %@ [%d pts]",_name, _category, _points];
 }
 
-+ (NSString *)parseClassName {
++ (NSString *)parseClassName
+{
     return @"Waypoint";
 }
 

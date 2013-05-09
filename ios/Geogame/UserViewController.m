@@ -52,6 +52,11 @@
         [self refreshInterface];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self refreshInterface];
+}
+
 - (void)refreshInterface
 {
     [super loadView];

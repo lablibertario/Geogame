@@ -11,7 +11,7 @@
 
 #import "Category.h"
 
-@interface Waypoint : PFObject //<PFSubClassing>
+@interface Waypoint : PFObject <PFSubclassing>
 {
     NSString* _id;
     NSString* _name;

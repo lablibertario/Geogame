@@ -11,7 +11,7 @@
 #import "User.h"
 #import "Waypoint.h"
 
-@interface UserComment : PFObject
+@interface UserComment : PFObject <PFSubclassing>
 {
     NSString* _id;
     User* _user;
@@ -36,5 +36,6 @@
 
 - (void)saveAsPFObjectInBackground;
 
++ (NSString *)parseClassName;
 
 @end

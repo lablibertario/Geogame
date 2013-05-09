@@ -109,14 +109,14 @@
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userCoordinate.latitude longitude:userCoordinate.longitude];
     CLLocation *waypointLocation = [[CLLocation alloc] initWithLatitude:[_waypoint coordinate].latitude longitude:[_waypoint coordinate].longitude];
     CLLocationDistance distance = [userLocation distanceFromLocation:waypointLocation];
-    /*
-    if(distance > 10000.0f)
+    
+    if(distance > 2000.0f)
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You are so far away! You need to be in 50 meters around the area to check in !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [message show];
         
         return;
-    }*/
+    }
     
     NSLog(@"Distance : %f", distance);
     
