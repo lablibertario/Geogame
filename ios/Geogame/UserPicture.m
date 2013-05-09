@@ -16,20 +16,6 @@
 @synthesize createdAt = _createdAt;
 @synthesize updatedAt = _updatedAt;
 
-- (id)initWithId:(NSString *)id image:(NSData *)image isSafe:(Boolean)isSafe createdAt:(NSDate *)createdAt updatedAt:(NSDate *)updatedAt
-{
-    if(self = [super init])
-    {
-        _id = id;
-        _image = image;
-        _isSafe = isSafe;
-        _createdAt= createdAt;
-        _updatedAt = updatedAt;
-    }
-    
-    return self;
-}
-
 - (id)initWithPFObject:(PFObject *)object
 {
     if(self = [super init])

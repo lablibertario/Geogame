@@ -24,8 +24,6 @@
 @property(nonatomic, retain) NSDate* createdAt;
 @property(nonatomic, retain) NSDate* updatedAt;
 
-- (id)initWithId:(NSString*)id picture:(NSData*)picture isSafe:(Boolean)isSafe createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
-
 - (id)initWithPFObject:(PFObject*)object;
 
 @end

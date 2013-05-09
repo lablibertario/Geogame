@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "AppDelegate.h"
 #import "POITableViewController.h"
@@ -40,11 +41,9 @@
     [refreshControl addTarget:self action:@selector(loadNearestPOI) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
-    if (![[_appDelegate user] isAuthenticated])
+    if ([User currentUser])
     {
-        LoginViewController *logInController = [[LoginViewController alloc] init];
-        logInController.delegate = self;
-        [self presentViewController:logInController animated:YES completion:nil];
+        _user = (User*)[User currentUser];
         
         return;
     }
@@ -52,7 +51,29 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     
+    if (![User currentUser])
+    {
+        // Create the log in view controller
+        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
+        [logInViewController setDelegate:self];
+        
+        // Create the sign up view controller
+        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
+        [signUpViewController setDelegate:self];
+        
+        // Assign our sign up controller to be displayed from the login controller
+        [logInViewController setSignUpController:signUpViewController];
+        
+        // Present the log in view controller
+        [self presentViewController:logInViewController animated:YES completion:NULL];
+    }
+    else
+    {
+        // Load POI.
+        [self loadNearestPOI];
+    }
     
 }
 
@@ -112,15 +133,16 @@
     
     if(userGeoPoint == nil)
     {
+        NSLog(@"User location fixed.");
         userGeoPoint.latitude = 43.5;
         userGeoPoint.longitude = 4.5;
     }
     
     // Query for POI retrieving.
     PFQuery *query = [PFQuery queryWithClassName:@"Waypoint"];
+    [query includeKey:@"objectId"];
     [query whereKey:@"location" nearGeoPoint:userGeoPoint];
     [query setLimit:20];
-    [query orderByAscending:@"location"];
     
     // Find objets in background.
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -130,10 +152,23 @@
              // Parse all objects.
              _waypoints = [[NSMutableArray alloc] initWithCapacity:objects.count];
              for (int i = 0 ; i < [objects count] ; i++)
+             {
+                 //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectForKey:@"objectId"]);
                  [_waypoints addObject:[[Waypoint alloc] initWithPFObject:[objects objectAtIndex:i]]];
+             }
              
              // Reload table view.
              [self.tableView reloadData];
+             
+             /*
+             CATransition *animation = [CATransition animation];
+             [animation setType:kCATransitionPush];
+             [animation setSubtype:kCATransitionFromBottom];
+             [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+             [animation setFillMode:kCAFillModeBoth];
+             [animation setDuration:.3];
+             [[self view] addAnimation:animation forKey:@"UITableViewReloadDataAnimationKey"];
+              */
          }
          else
          {
@@ -167,6 +202,8 @@
         // Create a destination controller and add selected waypoint.
         POICommentTableViewController *commentTableViewController = [segue destinationViewController];
         [commentTableViewController setWaypoint:[_waypoints objectAtIndex:indexPath.row]];
+        
+        NSLog(@"Selected waypoint : %@", [[commentTableViewController waypoint] name]);
     }
 }
 
@@ -195,6 +232,7 @@
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
 {
+    
     // Present new signup view.
     SignUpViewController* signupViewController = [[SignUpViewController alloc] init];
     [signupViewController setDelegate:self];

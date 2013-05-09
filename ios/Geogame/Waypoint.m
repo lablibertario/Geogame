@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+//#import <Parse/PFObject+Subclass.h>
 #import "Waypoint.h"
-#import <Parse/Parse.h>
 
 @implementation Waypoint
 
@@ -27,7 +27,10 @@
 {
     if ( self = [super init])
     {
-        
+        [self setObjectId:[object objectForKey:@"objectId"]];
+
+        NSLog(@"Object for key : %@", [object objectForKey:@"objectId"]);
+        NSLog(@"Object ID : %@", self.objectId);
         _id = [object objectForKey:@"id"];
         _name = [object objectForKey:@"name"];
         _category = [object objectForKey:@"category"];
@@ -55,6 +58,10 @@
 - (NSString*)toString
 {
     return [[NSString alloc] initWithFormat:@"%@ %@ [%d pts]",_name, _category, _points];
+}
+
++ (NSString *)parseClassName {
+    return @"Waypoint";
 }
 
 @end

@@ -23,14 +23,13 @@
 {
     [super viewDidLoad];
     
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate;
+    _user = [appDelegate user];
     
     [_titleTextView setDelegate:self];
     [_bodyTextView setDelegate:self];
     
     _comment = [[UserComment alloc] init];
-    [_comment setWaypoint:_waypoint];
-    [_comment setUser:[delegate user]];
 }
 
 #pragma mark - Actions.
@@ -54,8 +53,11 @@
     
         NSLog(@"Comment : %@", [_comment title]);
         NSLog(@"Comment : %@", [_comment body]);
-        NSLog(@"User : %@", [User currentUser]);
+        NSLog(@"User : %@", [_user username]);
         NSLog(@"Waypoint : %@", [[_comment waypoint] name]);
+    
+        [_comment setWaypoint:_waypoint];
+        [_comment setUser: _user];
         
         [_comment saveAsPFObjectInBackground];
         

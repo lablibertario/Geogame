@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Waypoint.h"
+#import "Quiz.h"
 
 @interface QuizTableViewController : UITableViewController
+{
+    Waypoint* _waypoint;
+    NSMutableArray* _questions;
+}
+
+@property(nonatomic,retain) Waypoint* waypoint;
 
 @end

@@ -12,6 +12,8 @@
 #import <MapKit/MKReverseGeocoder.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "LoginViewController.h"
+
 #import "Waypoint.h"
 #import "Log.h"
 
@@ -20,10 +22,13 @@
     CLLocationManager *_locationManager;
     MKMapView* _mapView;
     UIBarButtonItem* _refreshMapButton;
-    WaypointController *_waypointController;
+    
+    NSMutableArray *_waypoints;
     NSMutableArray *_annotations;
     UITabBar *_tabBar;
     UINavigationBar *_navigationBar;
+    
+    LoginViewController* _loginViewController;
 }
 
 @property(nonatomic, strong) IBOutlet UINavigationBar *navigationBar;
@@ -31,7 +36,7 @@
 @property(nonatomic, strong) IBOutlet MKMapView* mapView;
 @property(nonatomic, strong) IBOutlet UIBarButtonItem* refreshMapButton;
 @property(nonatomic, retain) CLLocationManager *locationManager;
-@property(nonatomic, strong) WaypointController *waypointController;
+@property (nonatomic, retain) NSMutableArray *waypoints;
 @property(nonatomic, retain) NSMutableArray *annotations;
 
 - (IBAction)refreshMap:(id)sender;

@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface UserPictureTableViewCell : UITableViewCell
+{
+    UIImageView* _userImageView;
+}
+
+@property(nonatomic,retain) IBOutlet UIImageView* userImageView;
 
 @end

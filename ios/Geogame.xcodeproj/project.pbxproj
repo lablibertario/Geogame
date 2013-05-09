@@ -11,7 +11,6 @@
 		4E08BBDD16D4D71B00777896 /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E08BBDC16D4D71B00777896 /* map@2x.png */; };
 		4E08BBDF16D4DA5600777896 /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E08BBDE16D4DA5600777896 /* man.png */; };
 		4E111A3816D2596400678700 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E111A3716D2596400678700 /* LoginViewController.m */; };
-		4E111A3E16D26DD100678700 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E111A3D16D26DD100678700 /* UserProfileViewController.m */; };
 		4E47DF5F16D7A71A008CBAFA /* UserPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E47DF5E16D7A71A008CBAFA /* UserPicture.m */; };
 		4E5AD3FA16D36FC400F8FD44 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AD3F916D36FC400F8FD44 /* Category.m */; };
 		4E5BD19016D2BD7A00EBE715 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */; };
@@ -36,9 +35,7 @@
 		4ECF659016FB6CB80086BA73 /* WaypointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECF658F16FB6CB80086BA73 /* WaypointController.m */; };
 		4ECF659316FB7D870086BA73 /* WaypointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECF659216FB7D860086BA73 /* WaypointViewController.m */; };
 		4ECF659516FB90570086BA73 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECF659416FB90570086BA73 /* logo.png */; };
-		4ECF659716FB909C0086BA73 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECF659616FB909B0086BA73 /* logo.png */; };
 		4ECF659916FB90C10086BA73 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECF659816FB90C10086BA73 /* logo@2x.png */; };
-		4ECF659B16FB90E60086BA73 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ECF659A16FB90E60086BA73 /* logo@2x.png */; };
 		4ED63590172298AE009B07BF /* POITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6358F172298AE009B07BF /* POITableViewController.m */; };
 		4ED635941722990E009B07BF /* POITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED635931722990E009B07BF /* POITableViewCell.m */; };
 		4ED6359A17229E39009B07BF /* iconTimeline.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ED6359617229E39009B07BF /* iconTimeline.png */; };
@@ -53,6 +50,7 @@
 		4ED635AA1722A29A009B07BF /* backgroundTabBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4ED635A61722A29A009B07BF /* backgroundTabBar@2x.png */; };
 		4ED9211B1723AE1F00BC2B81 /* POINewCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED9211A1723AE1F00BC2B81 /* POINewCommentViewController.m */; };
 		4ED9211E1723F16A00BC2B81 /* POIDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED9211D1723F16A00BC2B81 /* POIDetailViewController.m */; };
+		4EDE04DE1726E53700C0F1FF /* UserProfileEditPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDE04DD1726E53700C0F1FF /* UserProfileEditPictureViewController.m */; };
 		4EE0781117231F4F005110FD /* POICommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0781017231F4F005110FD /* POICommentTableViewController.m */; };
 		4EE0BF7C16D2525A00D6EA5C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE0BF7B16D2525A00D6EA5C /* UIKit.framework */; };
 		4EE0BF7E16D2525A00D6EA5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE0BF7D16D2525A00D6EA5C /* Foundation.framework */; };
@@ -92,6 +90,10 @@
 		4EE4ED171724447300B1E609 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE4ED161724447300B1E609 /* Log.m */; };
 		4EE8441A1722FFCF00F1F482 /* image-example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4EE844191722FFCF00F1F482 /* image-example.jpg */; };
 		4EEC4E7117144E0400888750 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEC4E7017144E0400888750 /* User.m */; };
+		4EF29B1A172678DE0024656F /* UserEditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF29B19172678DE0024656F /* UserEditProfileTableViewController.m */; };
+		4EF29B1D17267C9F0024656F /* UserPictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF29B1C17267C9F0024656F /* UserPictureTableViewCell.m */; };
+		4EF29B20172687DA0024656F /* UserProfileDeleteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */; };
+		4EF7CC80173939700012D2E4 /* QuizTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,8 +112,6 @@
 		4E08BBDE16D4DA5600777896 /* man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = man.png; sourceTree = "<group>"; };
 		4E111A3616D2596400678700 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4E111A3716D2596400678700 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		4E111A3C16D26DD100678700 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
-		4E111A3D16D26DD100678700 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		4E47DF5D16D7A71A008CBAFA /* UserPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPicture.h; sourceTree = "<group>"; };
 		4E47DF5E16D7A71A008CBAFA /* UserPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPicture.m; sourceTree = "<group>"; };
 		4E5AD3F816D36FC400F8FD44 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
@@ -178,6 +178,8 @@
 		4ED9211A1723AE1F00BC2B81 /* POINewCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POINewCommentViewController.m; path = POI/POINewCommentViewController.m; sourceTree = "<group>"; };
 		4ED9211C1723F16900BC2B81 /* POIDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIDetailViewController.h; path = POI/POIDetailViewController.h; sourceTree = "<group>"; };
 		4ED9211D1723F16A00BC2B81 /* POIDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIDetailViewController.m; path = POI/POIDetailViewController.m; sourceTree = "<group>"; };
+		4EDE04DC1726E53700C0F1FF /* UserProfileEditPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileEditPictureViewController.h; sourceTree = "<group>"; };
+		4EDE04DD1726E53700C0F1FF /* UserProfileEditPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileEditPictureViewController.m; sourceTree = "<group>"; };
 		4EE0780F17231F4F005110FD /* POICommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POICommentTableViewController.h; path = POI/POICommentTableViewController.h; sourceTree = "<group>"; };
 		4EE0781017231F4F005110FD /* POICommentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POICommentTableViewController.m; path = POI/POICommentTableViewController.m; sourceTree = "<group>"; };
 		4EE0BF7816D2525A00D6EA5C /* Geogame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geogame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +228,14 @@
 		4EE844191722FFCF00F1F482 /* image-example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "image-example.jpg"; sourceTree = "<group>"; };
 		4EEC4E6F17144E0400888750 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		4EEC4E7017144E0400888750 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		4EF29B18172678DE0024656F /* UserEditProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEditProfileTableViewController.h; sourceTree = "<group>"; };
+		4EF29B19172678DE0024656F /* UserEditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEditProfileTableViewController.m; sourceTree = "<group>"; };
+		4EF29B1B17267C9F0024656F /* UserPictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPictureTableViewCell.h; sourceTree = "<group>"; };
+		4EF29B1C17267C9F0024656F /* UserPictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPictureTableViewCell.m; sourceTree = "<group>"; };
+		4EF29B1E172687DA0024656F /* UserProfileDeleteTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileDeleteTableCell.h; sourceTree = "<group>"; };
+		4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileDeleteTableCell.m; sourceTree = "<group>"; };
+		4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizTableViewController.h; sourceTree = "<group>"; };
+		4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,7 +296,6 @@
 				4ED635A21722A19E009B07BF /* User */,
 				4E5BD18E16D2BD7A00EBE715 /* SearchViewController.h */,
 				4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */,
-				4E9E5D4716D3C5CD00DA4382 /* MapViewController.h */,
 				4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */,
 				4E85CCA316D6989C00FBD69B /* NewsViewController.h */,
 				4E85CCA416D6989C00FBD69B /* NewsViewController.m */,
@@ -295,10 +304,13 @@
 				4EA34C8316EFABAE0073C440 /* DiscoverViewController.h */,
 				4EA34C8416EFABAE0073C440 /* DiscoverViewController.m */,
 				4EA34C8616EFAD3A0073C440 /* DetailViewController.h */,
+				4E9E5D4716D3C5CD00DA4382 /* MapViewController.h */,
 				4EA34C8716EFAD3A0073C440 /* DetailViewController.m */,
 				4ECF659116FB7D860086BA73 /* WaypointViewController.h */,
 				4ECF659216FB7D860086BA73 /* WaypointViewController.m */,
 				4ED63591172298BD009B07BF /* POI */,
+				4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */,
+				4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -315,6 +327,7 @@
 				4ED921191723AE1F00BC2B81 /* POINewCommentViewController.h */,
 				4ED9211A1723AE1F00BC2B81 /* POINewCommentViewController.m */,
 				4ED9211C1723F16900BC2B81 /* POIDetailViewController.h */,
+				4ED6359F17229EA2009B07BF /* BgLeather@2x.png */,
 				4ED9211D1723F16A00BC2B81 /* POIDetailViewController.m */,
 			);
 			name = POI;
@@ -325,7 +338,6 @@
 			children = (
 				4ED6359E17229EA2009B07BF /* BgLeather.png */,
 				4ED6359817229E39009B07BF /* iconTimelineSelected.png */,
-				4ED6359F17229EA2009B07BF /* BgLeather@2x.png */,
 				4ED6359617229E39009B07BF /* iconTimeline.png */,
 				4ED6359717229E39009B07BF /* iconTimeline@2x.png */,
 				4ED6359917229E39009B07BF /* iconTimelineSelected@2x.png */,
@@ -338,14 +350,20 @@
 			children = (
 				4E111A3616D2596400678700 /* LoginViewController.h */,
 				4E111A3716D2596400678700 /* LoginViewController.m */,
-				4E111A3C16D26DD100678700 /* UserProfileViewController.h */,
-				4E111A3D16D26DD100678700 /* UserProfileViewController.m */,
 				4E80E50217216C5100DC9C45 /* UserViewController.h */,
 				4E80E50317216C5100DC9C45 /* UserViewController.m */,
 				4E80E5051721729E00DC9C45 /* SignUpViewController.h */,
 				4E80E5061721729E00DC9C45 /* SignUpViewController.m */,
 				4E80E50E17217DCE00DC9C45 /* UserActivityTableViewController.h */,
 				4E80E50F17217DCE00DC9C45 /* UserActivityTableViewController.m */,
+				4EF29B18172678DE0024656F /* UserEditProfileTableViewController.h */,
+				4EF29B19172678DE0024656F /* UserEditProfileTableViewController.m */,
+				4EF29B1B17267C9F0024656F /* UserPictureTableViewCell.h */,
+				4EF29B1C17267C9F0024656F /* UserPictureTableViewCell.m */,
+				4EF29B1E172687DA0024656F /* UserProfileDeleteTableCell.h */,
+				4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */,
+				4EDE04DC1726E53700C0F1FF /* UserProfileEditPictureViewController.h */,
+				4EDE04DD1726E53700C0F1FF /* UserProfileEditPictureViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -560,6 +578,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = 4EE0BF6F16D2525A00D6EA5C;
 			productRefGroup = 4EE0BF7916D2525A00D6EA5C /* Products */;
@@ -592,9 +611,7 @@
 				4E08BBDF16D4DA5600777896 /* man.png in Resources */,
 				4ECF658D16FB4F1C0086BA73 /* green_pin.png in Resources */,
 				4ECF659516FB90570086BA73 /* logo.png in Resources */,
-				4ECF659716FB909C0086BA73 /* logo.png in Resources */,
 				4ECF659916FB90C10086BA73 /* logo@2x.png in Resources */,
-				4ECF659B16FB90E60086BA73 /* logo@2x.png in Resources */,
 				4ED6359A17229E39009B07BF /* iconTimeline.png in Resources */,
 				4ED6359B17229E39009B07BF /* iconTimeline@2x.png in Resources */,
 				4ED6359C17229E39009B07BF /* iconTimelineSelected.png in Resources */,
@@ -644,7 +661,6 @@
 				4EE0BF8C16D2525A00D6EA5C /* AppDelegate.m in Sources */,
 				4EE0BFE316D2563E00D6EA5C /* Waypoint.m in Sources */,
 				4E111A3816D2596400678700 /* LoginViewController.m in Sources */,
-				4E111A3E16D26DD100678700 /* UserProfileViewController.m in Sources */,
 				4E5BD19016D2BD7A00EBE715 /* SearchViewController.m in Sources */,
 				4E5AD3FA16D36FC400F8FD44 /* Category.m in Sources */,
 				4E62BC9D16D3AA4D002A8604 /* UserComment.m in Sources */,
@@ -672,6 +688,11 @@
 				4ED9211B1723AE1F00BC2B81 /* POINewCommentViewController.m in Sources */,
 				4ED9211E1723F16A00BC2B81 /* POIDetailViewController.m in Sources */,
 				4EE4ED171724447300B1E609 /* Log.m in Sources */,
+				4EF29B1A172678DE0024656F /* UserEditProfileTableViewController.m in Sources */,
+				4EF29B1D17267C9F0024656F /* UserPictureTableViewCell.m in Sources */,
+				4EF29B20172687DA0024656F /* UserProfileDeleteTableCell.m in Sources */,
+				4EDE04DE1726E53700C0F1FF /* UserProfileEditPictureViewController.m in Sources */,
+				4EF7CC80173939700012D2E4 /* QuizTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,7 @@
 
 @implementation User
 
+@synthesize picture = _picture;
 @synthesize comments = _comments;
 @synthesize pictures = _pictures;
 
@@ -24,6 +25,33 @@
     }
     
     return self;
+}
+
+/*
++ (User*)currentUser
+{
+    PFUser* pfuser = (User*)[PFUser currentUser];
+    User* user = [[User alloc] init];
+    
+    if(pfuser)
+    {
+        [user setUsername:[pfuser username]];
+        [user setBirthday:[pfuser objectForKey:@"birthday"]];
+    }
+    
+    return user;
+}
+*/
+/*
+- (NSDate*)birthday
+{
+    return [self objectForKey:@"birthday"];
+}
+*/
+
++ (User *)currentUser;
+{
+    return (User*) [PFUser currentUser];
 }
 
 - (void)retrieveFromCloud
@@ -42,6 +70,10 @@
             _firstname = [object objectForKey:@"firstname"];
             _lastname = [object objectForKey:@"lastname"];
             _birthday = [object objectForKey:@"birthday"];
+            CLLocationCoordinate2D coord;
+            PFGeoPoint *p = [object objectForKey:@"location" ];
+            coord.latitude = p.latitude;
+            coord.longitude = p.longitude;
             
             AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             [delegate setUser:self];

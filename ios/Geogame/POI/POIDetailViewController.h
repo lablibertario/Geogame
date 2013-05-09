@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <Parse/Parse.h>
 
 #import "Waypoint.h"
 
@@ -19,6 +20,9 @@
     MKMapView* _waypointMapView;
     UIImageView* _waypointImageView;
     UITextView* _waypointDescriptionTextView;
+    
+    UIButton* _checkInButton;
+    UIButton* _showCommentsButton;
 }
 
 @property(nonatomic, retain) Waypoint* waypoint;
@@ -26,5 +30,12 @@
 @property(nonatomic, retain) IBOutlet MKMapView* waypointMapView;
 @property(nonatomic, retain) IBOutlet UIImageView* waypointImageView;
 @property(nonatomic, retain) IBOutlet UITextView* waypointDescriptionTextView;
+
+@property(nonatomic, retain) IBOutlet UIButton* checkInButton;
+@property(nonatomic, retain) IBOutlet UIButton*  showCommentsButton;
+
+- (IBAction)checkInAction:(UIButton*)checkInButton;
+
+- (IBAction)showCommentsAction:(UIButton*)showCommentsButton;
 
 @end

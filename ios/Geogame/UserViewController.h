@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+
+#import "LoginViewController.h"
+
 #import "User.h"
 
-@interface UserViewController : UIViewController <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface UserViewController : UIViewController <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     UINavigationBar* _navigationBar;
     UIImageView* _imageView;
@@ -21,6 +24,9 @@
     UIButton* _logOutButton;
     
     User* _user;
+    NSMutableArray* _activities;
+    
+    LoginViewController* _logInViewController;
 }
 
 @property(nonatomic, retain) IBOutlet UINavigationBar* navigationBar;

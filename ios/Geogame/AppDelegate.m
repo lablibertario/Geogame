@@ -20,10 +20,13 @@
 @synthesize waypointController = _waypointController;
 @synthesize user = _user;
 
-@synthesize currentUser = _currentUser;
+@synthesize locationManager = _locationManager;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[Waypoint registerSubclass];
+    
     // Setup auth with Parse, Facebook and Twitter.
     [Parse setApplicationId:@"3XwbhTy5xG8aB2w3R13MWIopSrDT8e8VNuVczaww" clientKey:@"gpsOemsV8zDZQ8l9oh4tvmyCBxITBXPaqO7kRdQG"];
     [PFFacebookUtils initializeWithApplicationId:@"488060031252333"];
@@ -33,6 +36,16 @@
     PFACL *defaultACL = [PFACL ACL];
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
+    // Init user object.
+    _user = [[User alloc] init];
+    
+    // Location manager.
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    _locationManager.distanceFilter = kCLDistanceFilterNone;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [_locationManager startUpdatingLocation];
     
     // App tracking.
     //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
@@ -75,6 +88,38 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     return [PFFacebookUtils handleOpenURL:url];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    // Ignore if new locaiton is near old location.
+    //if([oldLocation distanceFromLocation:newLocation] < 2)
+    //    return;
+    
+    NSLog(@"Location counter : %d", _locationCounter);
+    
+    // Save every 10 updates.
+    //while(_locationCounter++ < 10) return;
+    
+    // Reset counter.
+    _locationCounter = 0;
+    
+    // Update.
+    // Create the object.
+
+    PFGeoPoint* currentUserLocation = [[PFGeoPoint alloc] init];
+    [currentUserLocation setLatitude:newLocation.coordinate.latitude];
+    [currentUserLocation setLongitude:newLocation.coordinate.longitude];
+    
+    [[User currentUser] setObject:currentUserLocation forKey:@"location"];
+
+    //[[User currentUser] saveInBackground];
+    
+    PFObject* user = [User currentUser];
+    [user setObject:currentUserLocation forKey:@"location"];
+    [user saveInBackground];
+                      
+    
 }
 
 @end

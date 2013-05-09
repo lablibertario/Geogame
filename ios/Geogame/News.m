@@ -17,21 +17,6 @@
 @synthesize createdAt = _createdAt;
 @synthesize updatedAt = _updatedAt;
 
-- (id)initWithId:(NSString *)id title:(NSString *)title text:(NSString *)text isEnabled:(Boolean)isEnabled createdAt:(NSDate *)createdAt updatedAt:(NSDate *)updatedAt
-{
-    if(self = [super init])
-    {
-        _id = id;
-        _title = title;
-        _text = text;
-        _isEnabled = isEnabled;
-        _createdAt = createdAt;
-        _updatedAt = updatedAt;
-    }
-    
-    return self;
-}
-
 - (id)initWithPFObject:(PFObject *)object
 {
     if(self = [super init])

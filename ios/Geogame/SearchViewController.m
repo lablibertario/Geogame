@@ -30,9 +30,9 @@
 {
     [super viewDidLoad];
     
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
+    AppDelegate *delegate;
     
-    if (![delegate currentUser])
+    if (![delegate user])
     {
         LoginViewController *logInController = [[LoginViewController alloc] init];
         logInController.delegate = self;

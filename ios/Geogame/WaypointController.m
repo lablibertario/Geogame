@@ -27,7 +27,6 @@
 - (void)loadNearestWaypointsInBackground
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Waypoint"];
-    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)

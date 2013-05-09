@@ -8,20 +8,10 @@
 
 #import "UserProfileEditPictureViewController.h"
 
-@interface UserProfileEditPictureViewController ()
-
-@end
 
 @implementation UserProfileEditPictureViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize selectedImage;
 
 - (void)viewDidLoad
 {
@@ -33,6 +23,47 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *) Picker {
+    
+    //[[Picker parentViewController] dismissModalViewControllerAnimated:YES];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *) Picker
+
+didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    selectedImage.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    //[[Picker parentViewController] dismissModalViewControllerAnimated:YES];
+    
+}
+
+-(IBAction) buttonClicked
+{
+    
+    picker = [[UIImagePickerController alloc] init];
+    
+    //picker.delegate = self;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        
+    {
+        
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+    } else
+        
+    {
+        
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
+    }
+    
+    //[self presentModalViewController:picker animated:YES];
+    
 }
 
 @end

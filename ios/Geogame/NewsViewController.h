@@ -12,12 +12,12 @@
 
 @interface NewsViewController : UITableViewController  <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
-    NewsController* _newsController;
+    NSMutableArray* _news;
     UITableView *_tableView;
     
 }
 
-@property(nonatomic, retain) NewsController *newsController;
+@property(nonatomic, retain) NSMutableArray *news;
 @property(nonatomic, retain) IBOutlet UITableView *tableView;
 
 - (IBAction)refreshNews:(id)sender;

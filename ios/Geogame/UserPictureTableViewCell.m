@@ -10,6 +10,8 @@
 
 @implementation UserPictureTableViewCell
 
+@synthesize userImageView = _userImageView;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -18,6 +20,8 @@
     }
     return self;
 }
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

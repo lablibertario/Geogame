@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface News : NSObject
+@interface News : PFObject
 {
     NSString* _id;
     NSString* _title;
@@ -25,8 +25,6 @@
 @property(nonatomic) Boolean isEnabled;
 @property(nonatomic, retain) NSDate* createdAt;
 @property(nonatomic, retain) NSDate* updatedAt;
-
-- (id)initWithId:(NSString*)id title:(NSString*)title text:(NSString*)text isEnabled:(Boolean)isEnabled createdAt:(NSDate*)createdAt updatedAt:(NSDate*)updatedAt;
 
 - (id)initWithPFObject:(PFObject*)object;
 

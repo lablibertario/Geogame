@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@class Category;
+#import "Category.h"
 
-@interface Waypoint : PFObject
+@interface Waypoint : PFObject //<PFSubClassing>
 {
     NSString* _id;
     NSString* _name;
@@ -43,5 +43,7 @@
 - (id)initWithPFObject:(PFObject*)object;
 
 - (NSString*)toString;
+
++ (NSString *)parseClassName;
 
 @end

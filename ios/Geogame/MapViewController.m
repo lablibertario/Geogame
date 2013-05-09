@@ -25,7 +25,6 @@
 @synthesize mapView = _mapView;
 @synthesize locationManager = _locationManager;
 
-@synthesize waypointController = _waypointController;
 @synthesize annotations = _annotations;
 @synthesize navigationBar = _navigationBar;
 @synthesize tabBar = _tabBar;
@@ -38,18 +37,14 @@
 {
     [super viewDidLoad];
     
-    // Load the controller of nearest waypoints.
-    AppDelegate *delegate;
+    // Load waypoints.
+    [self loadNearestWaypointsInBackground];
     
-    if (![[delegate user] isAuthenticated])
-    {
-        LoginViewController *logInController = [[LoginViewController alloc] init];
-        logInController.delegate = self;
-        
-        [self presentViewController:logInController animated:YES completion:nil];
-        
-        return;
-    }
+    // Set up the view.
+    [self.navigationController.navigationBar
+     setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
+     forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
     
     // Default map'region.
     MKCoordinateRegion newRegion;
@@ -57,9 +52,6 @@
     newRegion.center.longitude = 5.437835454940796;
     newRegion.span.latitudeDelta = 0.112872;
     newRegion.span.longitudeDelta = 0.109863;
-    
-    
-    
     
     _mapView.delegate = self;
     [self.mapView setRegion:newRegion animated:YES];
@@ -71,16 +63,37 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     [_locationManager startUpdatingLocation];
     
-    
+    // Set up login view.
+    if (![User currentUser])
+    {
+        // Create the log in view controller
+        _loginViewController = [[LoginViewController alloc] init];
+        [_loginViewController setDelegate:self];
+            
+        // Create the sign up view controller
+        SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
+        [signUpViewController setDelegate:self];
+            
+        // Assign our sign up controller to be displayed from the login controller
+        [_loginViewController setSignUpController:signUpViewController];
+    }
+    else
+    {
+        [self refreshInterface];
+    }
+}
+
+- (void)refreshInterface
+{
+
     
     // Load annotations.
-    _annotations = [[NSMutableArray alloc] initWithCapacity:[[_waypointController waypoints] count]];
-    for(int i=0; i<[[_waypointController waypoints] count]; i++)
-        [_annotations addObject:[[Annotation alloc] initWithWaypoint:[[_waypointController waypoints] objectAtIndex:i]]];
+    _annotations = [[NSMutableArray alloc] initWithCapacity:[_waypoints count]];
+    for(int i=0; i<[_waypoints count]; i++)
+        [_annotations addObject:[[Annotation alloc] initWithWaypoint:[_waypoints objectAtIndex:i]]];
     [_mapView removeAnnotations:_mapView.annotations];
     [_mapView addAnnotations:_annotations];
     NSLog(@"Nb annotations (from WC) : %d", [_annotations count]);
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,6 +103,17 @@
     // Focus on user location.
     MKCoordinateRegion userLocation = MKCoordinateRegionMakeWithDistance([_locationManager location].coordinate, 5000.0, 5000.0);
     [_mapView setRegion:userLocation animated:true];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (![User currentUser])
+    {
+        // Present the log in view controller
+        [self presentViewController:_loginViewController animated:YES completion:NULL];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -102,7 +126,6 @@
     _locationManager.delegate = nil;
     _locationManager = nil;
     _mapView = nil;
-    _waypointController = nil;
     _annotations = nil;
 }
 
@@ -202,6 +225,44 @@
     return nil;
 }
 
+- (void)loadNearestWaypointsInBackground
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Waypoint"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             // The find succeeded.
+             NSLog(@"Successfully retrieved %d waypoints.", objects.count);
+             
+             // Parse all objects.
+             _waypoints = [[NSMutableArray alloc] initWithCapacity:objects.count];
+             for (int i = 0 ; i < [objects count] ; i++)
+                 [_waypoints addObject:[[Waypoint alloc] initWithPFObject:[objects objectAtIndex:i]]];
+             
+             [self performSelectorOnMainThread:@selector(refreshInterface) withObject:nil waitUntilDone:FALSE];
+         } else {
+             // Log details of the failure
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
+    
+    
+    
+}
+
+-(void) reloadMap
+{
+    MKCoordinateRegion newRegion;
+    newRegion.center.latitude = 43.23138390229439;
+    newRegion.center.longitude = 5.437835454940796;
+    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.longitudeDelta = 0.109863;
+    [_mapView setRegion:newRegion animated:TRUE];
+    
+    
+}
+
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     [self performSegueWithIdentifier:@"showWaypointDetails" sender:view];
@@ -217,8 +278,11 @@
     }
 }
 
+#pragma mark - User auth delegate.
+
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
-{ 
+{
+    
     // Dismiss login view.
     [logInController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -234,6 +298,7 @@
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
 {
+    
     // Present new signup view.
     SignUpViewController* signupViewController = [[SignUpViewController alloc] init];
     [signupViewController setDelegate:self];
@@ -256,6 +321,7 @@
     [log setMessage:@"An error occured during signup process."];
     [log saveEventually];
 }
+
 
 #pragma mark - Memory
 - (void)didReceiveMemoryWarning

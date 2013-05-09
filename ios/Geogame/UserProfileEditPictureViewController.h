@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserProfileEditPictureViewController : UIViewController
+@interface UserProfileEditPictureViewController : UIViewController <UIImagePickerControllerDelegate>
+{
+    UIImagePickerController *picker;
+    IBOutlet UIImageView * selectedImage;
+}
+
+@property (nonatomic, retain) UIImageView * selectedImage;
+
+- (IBAction) buttonClicked;
 
 @end

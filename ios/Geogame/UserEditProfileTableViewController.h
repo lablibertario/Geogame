@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "User.h"
+
 @interface UserEditProfileTableViewController : UITableViewController
+{
+    User* _user;
+}
+
+@property(nonatomic, retain) User* user;
 
 @end

@@ -6,109 +6,265 @@
 //  Copyright (c) 2013 Mathieu Dabek. All rights reserved.
 //
 
+#import "AppDelegate.h"
+
 #import "UserEditProfileTableViewController.h"
-
-@interface UserEditProfileTableViewController ()
-
-@end
+#import "UserPictureTableViewCell.h"
+#import "UserProfileDeleteTableCell.h"
 
 @implementation UserEditProfileTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize user = _user;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    _user = (User*)[User currentUser];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{    
+    switch(section)
+    {
+        // User's picture.
+        case 0:
+            return 1;
+            break;
+            
+        // User's profile.
+        case 1:
+            return 3;
+            break;
+            
+        // User's personal details.
+        case 2:
+            return 3;
+            break;
+        
+        // Delete account.
+        case 3:
+            return 1;
+            break;
+            
+        // Default.
+        default:
+            return 0;
+    }
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    switch (section)
+    {
+        case 0:
+            return @"Picture";
+            break;
+        case 1:
+            return @"Profile";
+            break;
+        
+        case 2:
+            return @"Personal details";
+            break;
+        default:
+            return nil;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    switch([indexPath section])
+    {
+        // User's profile picture.
+        case 0:
+        {
+            static NSString *CellIdentifier = @"UserProfileImageCell";
+            UserPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+            if (cell == nil)
+                cell = [[UserPictureTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
+            // Load user picture.
+            PFImageView *imageView = [[PFImageView alloc] init];
+            imageView.image = [UIImage imageNamed:@"image-example.png"];
+            imageView.file = (PFFile *)[_user objectForKey:@"picture"];
+            [imageView loadInBackground:^(UIImage *image, NSError *error) {
+                [[cell userImageView] setImage:imageView.image];
+                [[cell userImageView] reloadInputViews];
+            }];
+
+            return cell;
+        }
+        
+        // User's profile.
+        case 1:
+        {
+
+            switch(indexPath.row)
+            {
+                // User's username.
+                case 0:
+                {
+                    static NSString *CellIdentifier = @"UserProfileTextCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Username"];
+                    [[cell detailTextLabel] setText:[_user username]];
+                    
+                    return cell;
+                }
+                    
+                // User's email.
+                case 1:
+                {
+                    static NSString *CellIdentifier = @"UserProfileTextCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Email"];
+                    [[cell detailTextLabel] setText:[_user email]];
+                    
+                    return cell;
+                }
+                    
+                // User's location.
+                case 2:
+                {
+                    static NSString *CellIdentifier = @"UserProfileLocationCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Location"];
+                    //[[cell detailTextLabel] setText:[_user objectForKey:@"location"]];
+                    
+                    return cell;
+                }
+            }
+        }
+            
+        // User's personal details.
+        case 2:
+        {
+            switch (indexPath.row)
+            {
+                // User's firstname.
+                case 0:
+                {
+                    static NSString *CellIdentifier = @"UserProfileTextCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Firstname"];
+                    [[cell detailTextLabel] setText:[_user objectForKey:@"firstname"]];
+                    
+                    return cell;
+                    break;
+                }
+                    
+                // User's lastname.
+                case 1:
+                {
+                    static NSString *CellIdentifier = @"UserProfileTextCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Lastname"];
+                    [[cell detailTextLabel] setText:[_user objectForKey:@"lastname"]];
+                    
+                    return cell;
+                    break;
+                }
+                    
+                // User's birthday
+                case 2:
+                {
+                    static NSString *CellIdentifier = @"UserProfileTextCell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    if (cell == nil)
+                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                    [[cell textLabel] setText:@"Birthday"];
+                    //[[cell detailTextLabel] setText:[_user objectForKey:@"birthday"]];
+                    
+                    return cell;
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+        }
+            
+        case 3:
+        {
+            static NSString *CellIdentifier = @"UserProfileDeleteCell";
+            UserProfileDeleteTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            if (cell == nil)
+                cell = [[UserProfileDeleteTableCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+    }
+    
+    static NSString *CellIdentifier = @"UserProfileTextCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (cell == nil)
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
     return cell;
+
 }
 
-/*
-// Override to support conditional editing of the table view.
+- (GLfloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{   
+    switch([indexPath section])
+    {
+        case 0:
+        {
+            switch (indexPath.row)
+            {
+                case 0:
+                return 120.0f;
+            }
+        }
+        default:
+            return 44.0f;
+    }
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    switch ([indexPath section])
+    {
+        // User's picture.
+        case 0:
+        {
+            
+        }
+        default:
+            break;
+    }
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

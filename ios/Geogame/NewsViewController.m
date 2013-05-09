@@ -17,21 +17,20 @@
 
 @implementation NewsViewController
 
-@synthesize newsController = _newsController;
+@synthesize news = _news;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Load the controller of latest news.
-    AppDelegate *delegate = [[UIApplication  sharedApplication] delegate];
-    _newsController = delegate.newsController;
+    // Set up the view.
+    [self.navigationController.navigationBar
+     setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
+     forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
     
     // Load latest news.
-    _newsController = [[NewsController alloc] init];
-    [_newsController loadLatestNewsInBackground];
-    
-    [self.tableView reloadData];
+    [self loadLatestNewsInBackground];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_newsController news] count];
+    return [_news count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,40 +61,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     
-    [[cell textLabel] setText:[[[_newsController news] objectAtIndex:indexPath.row] title]];
-    [[cell detailTextLabel] setText:[[[_newsController news] objectAtIndex:indexPath.row] text]];
+    [[cell textLabel] setText:[[_news objectAtIndex:indexPath.row] title]];
+    [[cell detailTextLabel] setText:[[_news objectAtIndex:indexPath.row] text]];
     return cell;
 }
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -121,8 +90,35 @@
     {
         NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
         NewsDetailViewController *detailViewController = [segue destinationViewController];
-        [detailViewController setNews:[[_newsController news]objectAtIndex:selectedRowIndex.row]];
+        [detailViewController setNews:[_news objectAtIndex:selectedRowIndex.row]];
     }
+}
+
+- (void)loadLatestNewsInBackground
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"News"];
+    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             // The find succeeded.
+             NSLog(@"Successfully retrieved %d news.", objects.count);
+             
+             // Parse all objects.
+             _news = [[NSMutableArray alloc] initWithCapacity:objects.count];
+             for (int i = 0 ; i < [objects count] ; i++)
+                 [_news addObject:[[News alloc] initWithPFObject:[objects objectAtIndex:i]]];
+             
+             // Reload table view.
+             [self.tableView reloadData];
+         }
+         else
+         {
+             // Log details of the failure
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
 }
 
 #pragma mark - Actions
@@ -130,8 +126,7 @@
 - (IBAction)refreshNews:(id)sender
 {
     NSLog(@"Tag gesture on the navigation bar to refresh content.");
-    [_newsController loadLatestNewsInBackground];
-    [_tableView reloadData];
+    [self loadLatestNewsInBackground];
 }
 
 
