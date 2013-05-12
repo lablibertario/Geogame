@@ -17,6 +17,7 @@
     Waypoint* _waypoint;
     
     UILabel* _waypointNameLabel;
+    UILabel* _waypointReferenceLabel;
     MKMapView* _waypointMapView;
     UIImageView* _waypointImageView;
     UITextView* _waypointDescriptionTextView;
@@ -27,6 +28,7 @@
 
 @property(nonatomic, retain) Waypoint* waypoint;
 @property(nonatomic, retain) IBOutlet UILabel* waypointNameLabel;
+@property(nonatomic, retain) IBOutlet UILabel* waypointReferenceLabel;
 @property(nonatomic, retain) IBOutlet MKMapView* waypointMapView;
 @property(nonatomic, retain) IBOutlet UIImageView* waypointImageView;
 @property(nonatomic, retain) IBOutlet UITextView* waypointDescriptionTextView;

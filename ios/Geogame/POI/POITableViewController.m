@@ -107,7 +107,7 @@
     
     // Set up interface.
     [[cell waypointNameLabel] setText:[waypoint name]];
-    if([waypoint picture])
+    if([waypoint picture] != nil)
         [[cell waypointImageView] setImage:[UIImage imageWithData:[waypoint picture]]];
     
     return cell;
@@ -133,16 +133,17 @@
     
     if(userGeoPoint == nil)
     {
-        NSLog(@"User location fixed.");
-        userGeoPoint.latitude = 43.5;
-        userGeoPoint.longitude = 4.5;
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Unable to get your current location. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [message show];
+        return;
     }
     
     // Query for POI retrieving.
     PFQuery *query = [PFQuery queryWithClassName:@"Waypoint"];
-    [query includeKey:@"objectId"];
+    //[query includeKey:@"objectId"];
     [query whereKey:@"location" nearGeoPoint:userGeoPoint];
-    [query setLimit:20];
+    [query whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
+    //[query setLimit:20];
     
     // Find objets in background.
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -162,6 +163,10 @@
          }
          else
          {
+             UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Unable to load nearest waypoints. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+             [message show];
+             return;
+             
              // Log details of the failure
              NSLog(@"Error: %@ %@", error, [error userInfo]);
          }
@@ -180,6 +185,10 @@
         NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
         POICommentTableViewController *detailViewController = [segue destinationViewController];
         [detailViewController setWaypoint:[_waypoints objectAtIndex:selectedRowIndex.row]];
+        
+        
+        Waypoint* waypoint = [_waypoints objectAtIndex:selectedRowIndex.row];
+        NSLog(@"WP ID : %@", [waypoint objectId]);
     }
     
     // Segue to show waypoint's comments.
@@ -194,7 +203,8 @@
         POICommentTableViewController *commentTableViewController = [segue destinationViewController];
         [commentTableViewController setWaypoint:[_waypoints objectAtIndex:indexPath.row]];
         
-        NSLog(@"Selected waypoint : %@", [[commentTableViewController waypoint] name]);
+        Waypoint* waypoint = [_waypoints objectAtIndex:indexPath.row];
+        NSLog(@"WP ID : %@", [waypoint objectId]);
     }
 }
 

@@ -14,6 +14,7 @@
 #import "UserProfileEditPictureViewController.h"
 #import "UserPictureTableViewCell.h"
 #import "UserProfileDeleteTableCell.h"
+#import "UserProfileEditableTableViewCell.h"
 
 @implementation UserEditProfileTableViewController
 
@@ -147,12 +148,12 @@
                 // User's email.
                 case 1:
                 {
-                    static NSString *CellIdentifier = @"UserProfileTextCell";
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                    static NSString *CellIdentifier = @"UserProfileEditableCell";
+                    UserProfileEditableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
                     if (cell == nil)
-                        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                        cell = [[UserProfileEditableTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                     [[cell textLabel] setText:@"Email"];
-                    [[cell detailTextLabel] setText:[_user email]];
+                    [[cell textField] setText:[[User currentUser] objectForKey:@"email"]];
                     
                     return cell;
                 }
@@ -165,7 +166,7 @@
                     if (cell == nil)
                         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
                     [[cell textLabel] setText:@"Location"];
-                    //[[cell detailTextLabel] setText:[_user objectForKey:@"location"]];
+                    [[cell detailTextLabel] setText:[[User currentUser] objectForKey:@"city"]];
                     
                     return cell;
                 }
@@ -199,8 +200,8 @@
                     if (cell == nil)
                         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
                     [[cell textLabel] setText:@"Lastname"];
-                    [[cell detailTextLabel] setText:[_user objectForKey:@"lastname"]];
-                    
+                    [[cell detailTextLabel] setText:[[User currentUser] objectForKey:@"lastname"]];
+                    //[[cell detailTextLabel] setText:@"TEST"];
                     return cell;
                     break;
                 }
@@ -213,7 +214,11 @@
                     if (cell == nil)
                         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
                     [[cell textLabel] setText:@"Birthday"];
-                    //[[cell detailTextLabel] setText:[_user objectForKey:@"birthday"]];
+                    
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"dd/MM/yyyy"];
+                    NSString *stringFromDate = [formatter stringFromDate:[[User currentUser] objectForKey:@"birthday"]];
+                    [[cell detailTextLabel] setText:stringFromDate];
                     
                     return cell;
                     break;
@@ -299,6 +304,13 @@
         UserProfileEditPictureViewController *destinationViewController = [segue destinationViewController];
         [destinationViewController setUser:_user];
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 

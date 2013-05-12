@@ -27,15 +27,12 @@
 {
     if ( self = [super init])
     {
-        [self setObjectId:[object objectForKey:@"objectId"]];
-
-        NSLog(@"Object for key : %@", [object objectForKey:@"objectId"]);
-        NSLog(@"Object ID : %@", self.id);
-        _id = [object objectForKey:@"objectId"];
-        NSLog(@"Object ID : %@", _id);
+        self.objectId = [object objectId];
+        
+        _id = [object objectId];
         _name = [object objectForKey:@"name"];
         _category = [object objectForKey:@"category"];
-        _picture = [object objectForKey:@"picture"];
+        //_picture = [object objectForKey:@"picture"];
         
         // Download picture.
         PFFile *picture = [object objectForKey:@"picture"];

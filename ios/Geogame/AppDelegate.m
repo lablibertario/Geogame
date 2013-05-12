@@ -14,6 +14,7 @@
 #import "Waypoint.h"
 #import "User.h"
 #import "UserComment.h"
+#import "UserCheckIn.h"
 #import "UserPicture.h"
 #import "News.h"
 #import "Quiz.h"
@@ -37,6 +38,7 @@
     [Waypoint registerSubclass];
     [User registerSubclass];
     [UserComment registerSubclass];
+    [UserCheckIn registerSubclass];
     [UserPicture registerSubclass];
     [Quiz registerSubclass];
     [QuizQuestion registerSubclass];
@@ -102,6 +104,21 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    if([[User currentUser] objectForKey:@"location"] == nil)
+    {
+        PFGeoPoint* currentUserLocation = [[PFGeoPoint alloc] init];
+        [currentUserLocation setLatitude:newLocation.coordinate.latitude];
+        [currentUserLocation setLongitude:newLocation.coordinate.longitude];
+        
+        [[User currentUser] setObject:currentUserLocation forKey:@"location"];
+        
+        //[[User currentUser] saveInBackground];
+        
+        PFObject* user = [User currentUser];
+        [user setObject:currentUserLocation forKey:@"location"];
+        [user saveInBackground];
+    }
+    
     // Ignore if new locaiton is near old location.
     if([oldLocation distanceFromLocation:newLocation] < 2)
         return;

@@ -12,6 +12,10 @@
 #import "UserEditProfileTableViewController.h"
 #import "LoginViewController.h"
 #import "SignUpViewController.h"
+#import "UserComment.h"
+#import "UserCheckIn.h"
+#import "POICommentTableViewCell.h"
+#import "CheckInTableViewCell.h"
 
 #import "Log.h"
 
@@ -21,6 +25,9 @@
 @synthesize imageView = _imageView;
 @synthesize usernameLabel = _usernameLabel;
 @synthesize emailLabel = _emailLabel;
+
+@synthesize comments = _comments;
+@synthesize checkIns = _checkIns;
 
 - (void)viewDidLoad
 {
@@ -75,6 +82,64 @@
     }];
     
     // Load activity.
+    
+    [self loadUserCheckInsInBackground];
+    [self loadUserCommentsInBackground];
+}
+
+- (void)loadUserCheckInsInBackground
+{
+    PFRelation *commentRelation = [[User currentUser] relationforKey:@"checkIns"];
+    [[commentRelation query] orderByDescending:@"createdAt"];
+    [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             // Parse all objects.
+             _checkIns = [[NSMutableArray alloc] initWithCapacity:objects.count];
+             for (int i = 0 ; i < [objects count] ; i++)
+             {
+                 [_checkIns addObject:[[UserCheckIn alloc] initWithPFObject:[objects objectAtIndex:i]]];
+                 NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+             }
+             
+             NSLog(@"Comments nb : %d", [_checkIns count]);
+             
+             [_activityTableView reloadData];
+         }
+         else
+         {
+             // Log details of the failure
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
+}
+
+- (void)loadUserCommentsInBackground
+{
+    PFRelation *commentRelation = [[User currentUser] relationforKey:@"comments"];
+    [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             // Parse all objects.
+             _comments = [[NSMutableArray alloc] initWithCapacity:objects.count];
+             for (int i = 0 ; i < [objects count] ; i++)
+             {
+                 [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
+                 NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+             }
+             
+             NSLog(@"Comments nb : %d", [_comments count]);
+             
+             [_activityTableView reloadData];
+         }
+         else
+         {
+             // Log details of the failure
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,29 +157,103 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_activities count];
+    switch (section)
+    {
+        case 0:
+            return [_checkIns count];
+            break;
+            
+        case 1:
+            return [_comments count];
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
 }
+
+
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Activity";
+    switch (section)
+    {
+        case 0:
+            return @"Check Ins";
+            break;
+            
+        case 1:
+            return @"Comments";
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch ([indexPath section]) {
+        case 0:
+            return 45.0f;
+            break;
+            
+        case 1:
+            return 200.0f;
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ActivityCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    switch([indexPath section])
+    {
+        case 0:
+        {
+            static NSString *CellIdentifier = @"CheckInCell";
+            CheckInTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
-    if (cell == nil)
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    
-    return cell;
-    
+            if (cell == nil)
+                cell = [[CheckInTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            
+            UserCheckIn* checkIn = [_checkIns objectAtIndex:indexPath.row];
+            [[cell titleLabel] setText:[checkIn title]];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"dd/MM/yyyy"];
+            NSString *stringFromDate = [formatter stringFromDate:[checkIn createdAt]];
+            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
+            
+            return cell;
+        }
+
+        case 1:
+        {
+            static NSString *CellIdentifier = @"CommentCell";
+            POICommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            UserComment* comment = [_comments objectAtIndex:indexPath.row];
+            [[cell titleLabel] setText:[comment title]];
+            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",[comment createdAt]]];
+            [[cell textView] setText:[comment body]];
+            
+            return cell;
+        }
+            
+    default:
+            return nil;
+        break;
+    }
 }
 
 #pragma mark - Table view delegate
@@ -159,6 +298,7 @@
         [detailViewController setUser:_user];
         
     }
+
 }
 
 #pragma mark - Delegate.

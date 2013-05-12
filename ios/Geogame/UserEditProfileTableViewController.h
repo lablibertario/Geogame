@@ -10,7 +10,7 @@
 
 #import "User.h"
 
-@interface UserEditProfileTableViewController : UITableViewController
+@interface UserEditProfileTableViewController : UITableViewController <UITextFieldDelegate>
 {
     User* _user;
 }

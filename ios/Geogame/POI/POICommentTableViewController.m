@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "POICommentTableViewController.h"
 #import "POINewCommentViewController.h"
+#import "POICommentTableViewCell.h"
 #import "UserComment.h"
 
 @interface POICommentTableViewController ()
@@ -21,40 +22,57 @@
 {
     [super viewDidLoad];
     
-    if(_waypoint == nil)
+    /*
+    if([_waypoint objectId] == nil)
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"An error occured" message:@"Cannot load comments, please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [message show];
         
         return;
     }
+    
+    // Set up refresh control.
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(loadLatestCommentInBackground) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;*/
 
-    // Find waypoint's comments in background.
-    PFQuery *query = [PFQuery queryWithClassName:@"UserComment"];
-    [query whereKey:@"waypoint" equalTo:_waypoint];
-    query.limit = 100;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
-             // Parse all objects.
-             _comments = [[NSMutableArray alloc] initWithCapacity:objects.count];
-             for (int i = 0 ; i < [objects count] ; i++)
-             {
-                 [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
-                 NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectForKey:@"objectId"]);
-             }
-             
-             NSLog(@"Comments nb : %d", [_comments count]);
-             
-             [self.tableView reloadData];
-         }
-         else
-         {
-             // Log details of the failure
-             NSLog(@"Error: %@ %@", error, [error userInfo]);
-         }
-     }];
+    [self loadLatestCommentInBackground];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)loadLatestCommentInBackground
+{
+    if([_waypoint objectId] == nil)
+        NSLog(@"Invalid WP ID");
+        
+    PFRelation *commentRelation = [_waypoint relationforKey:@"comments"];
+    [[commentRelation query] whereKey:@"isSafe" equalTo:[NSNumber numberWithBool:YES]];
+    [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        if (!error)
+        {
+            // Parse all objects.
+            _comments = [[NSMutableArray alloc] initWithCapacity:objects.count];
+            for (int i = 0 ; i < [objects count] ; i++)
+            {
+                [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
+                NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+            }
+            
+            NSLog(@"Comments nb : %d", [_comments count]);
+            
+            [self.tableView reloadData];
+        }
+        else
+        {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,11 +95,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"POICommentCell";
+    POICommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     UserComment* comment = [_comments objectAtIndex:indexPath.row];
-    [[cell textLabel] setText:[comment title]];
+    [[cell titleLabel] setText:[comment title]];
+    [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",[comment createdAt]]];
+    [[cell textView] setText:[comment body]];
     
     return cell;
 }

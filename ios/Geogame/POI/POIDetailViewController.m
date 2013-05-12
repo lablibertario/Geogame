@@ -9,9 +9,12 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "POIDetailViewController.h"
+#import "POINewCommentViewController.h"
+#import "POICommentTableViewController.h"
 #import "QuizTableViewController.h"
 #import "Annotation.h"
 #import "User.h"
+#import "UserCheckIn.h"
 
 
 @implementation POIDetailViewController
@@ -19,6 +22,7 @@
 @synthesize waypoint = _waypoint;
 
 @synthesize waypointNameLabel = _waypointNameLabel;
+@synthesize waypointReferenceLabel = _waypointReferenceLabel;
 @synthesize waypointMapView = _waypointMapView;
 @synthesize waypointImageView = _waypointImageView;
 @synthesize waypointDescriptionTextView = _waypointDescriptionTextView;
@@ -31,6 +35,7 @@
     [super viewDidLoad];
 	
     [_waypointNameLabel setText:[_waypoint name]];
+    [_waypointReferenceLabel setText:[_waypoint objectId]];
     [_waypointDescriptionTextView setText:[_waypoint description]];
     [_waypointImageView setImage:[UIImage imageWithData:[_waypoint picture]]];
     
@@ -47,8 +52,6 @@
     Annotation *annotation = [[Annotation alloc] initWithWaypoint:_waypoint];
     [_waypointMapView removeAnnotations:_waypointMapView.annotations];
     [_waypointMapView addAnnotation:annotation];
-    
-    _waypoint = [[Waypoint alloc] init];
     
     CLLocationCoordinate2D coordinates[2];
     coordinates[0] = _waypoint.coordinate;
@@ -97,79 +100,7 @@
 }
 
 - (IBAction)checkInAction:(UIButton *)checkInButton
-{
-    NSLog(@"Check In !");
-    
-    PFGeoPoint* userGeoPoint = [[User currentUser] objectForKey:@"location"];
-    CLLocationCoordinate2D userCoordinate;
-    userCoordinate.latitude = userGeoPoint.latitude;
-    userCoordinate.longitude = userGeoPoint.longitude;
-    
-    // Check distance between user and waypoint.
-    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userCoordinate.latitude longitude:userCoordinate.longitude];
-    CLLocation *waypointLocation = [[CLLocation alloc] initWithLatitude:[_waypoint coordinate].latitude longitude:[_waypoint coordinate].longitude];
-    CLLocationDistance distance = [userLocation distanceFromLocation:waypointLocation];
-    
-    if(distance > 2000.0f)
-    {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You are so far away! You need to be in 50 meters around the area to check in !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [message show];
-        
-        return;
-    }
-    
-    NSLog(@"Distance : %f", distance);
-    
-    // Save checkIn.
-    /*
-    PFObject* object = [PFObject objectWithClassName:@"UserCheckIn"];
-    [object setObject:[User currentUser] forKey:@"user"];
-    [object setObject:[_waypoint objectId] forKey:@"waypoint"];
-    
-    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Yeah !" message:@"You've just posted a new check in!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [message show];
-            NSLog(@"Saved");
-        } else {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"We can not save your check in. Please try again!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [message show];
-        }
-    }];
-    */
-    /*
-    PFObject* object = _waypoint;
-    [object save];
-
-            PFUser *user = [PFUser currentUser];
-            PFRelation *relation = [user relationforKey:@"checkIn"];
-            [relation addObject:@"plop"];
-            [user save];
-
-    */
-    
-    /*
-        if(!error) {
-    PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationforKey:@"checkIn"];
-    [relation addObject:_waypoint];
-    
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Yeah !" message:@"You've just posted a new check in!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [message show];
-            NSLog(@"Saved");
-        } else {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"We can not save your check in. Please try again!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [message show];
-        }
-    }]; }*/
-    
-    
-    //[_waypoint setObject:[User currentUser] forKey:@"checkIn"];
-    //[_waypoint saveInBackground];
-    
-    NSLog(@"Yop");
+{ 
 }
 
 - (IBAction)showCommentsAction:(UIButton *)showCommentsButton
@@ -182,8 +113,78 @@
     // Segue to show more informations about a waypoint.
     if ([[segue identifier] isEqualToString:@"ShowPOIQuiz"])
     {
+        NSLog(@"Check In !");
+        
+        PFGeoPoint* userGeoPoint = [[User currentUser] objectForKey:@"location"];
+        CLLocationCoordinate2D userCoordinate;
+        userCoordinate.latitude = userGeoPoint.latitude;
+        userCoordinate.longitude = userGeoPoint.longitude;
+        
+        // Check distance between user and waypoint.
+        CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userCoordinate.latitude longitude:userCoordinate.longitude];
+        CLLocation *waypointLocation = [[CLLocation alloc] initWithLatitude:[_waypoint coordinate].latitude longitude:[_waypoint coordinate].longitude];
+        CLLocationDistance distance = [userLocation distanceFromLocation:waypointLocation];
+        
+        NSLog(@"Distance : %f", distance);
+        if(distance > 2000.0f)
+        {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You are so far away! You need to be in 50 meters around the area to check in !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [message show];
+            
+            //return;
+        }
+        
+        // Create a new checkIn.
+        UserCheckIn* checkIn = (UserCheckIn*)[PFObject objectWithClassName:@"UserCheckIn"];
+        [checkIn setObject:[_waypoint name] forKey:@"title"];
+        
+        [checkIn saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(!error)
+            {
+                // Save user's relation.
+                PFUser *user = [PFUser currentUser];
+                PFRelation *userRelation = [user relationforKey:@"checkIns"];
+                [userRelation addObject:checkIn];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(!error)
+                    {
+                        // Save waypoint's relation.
+                        NSLog(@"ID : %@", [_waypoint objectId]);
+                        PFRelation *waypointRelation = [_waypoint relationforKey:@"checkIns"];
+                        [waypointRelation addObject:checkIn];
+                        [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if(!error)
+                            {
+                                UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                [message show];
+                            }
+                            else
+                            {
+                                NSLog(@"Error while CheckIn save.");
+                            }
+                        }];
+                    }
+                }];
+            }
+        }];
+        
         QuizTableViewController *detailViewController = [segue destinationViewController];
         [detailViewController setWaypoint:_waypoint];
+    }
+    
+    if ([[segue identifier] isEqualToString:@"NewPOIComment"])
+    {
+        // Create a destination controller and add selected waypoint.
+        POINewCommentViewController *destinationViewController = [segue destinationViewController];
+        [destinationViewController setWaypoint:self.waypoint];
+    }
+    
+    // Segue to show waypoint's comments.
+    if ([[segue identifier] isEqualToString:@"ShowPOIComments"])
+    {        
+        // Create a destination controller and add selected waypoint.
+        POICommentTableViewController *commentTableViewController = [segue destinationViewController];
+        [commentTableViewController setWaypoint:self.waypoint];
     }
 }
 

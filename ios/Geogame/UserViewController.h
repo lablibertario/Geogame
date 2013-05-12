@@ -24,7 +24,9 @@
     UIButton* _logOutButton;
     
     User* _user;
-    NSMutableArray* _activities;
+    
+    NSMutableArray* _checkIns;
+    NSMutableArray* _comments;
     
     LoginViewController* _logInViewController;
 }
@@ -38,6 +40,9 @@
 @property(nonatomic, retain) IBOutlet UIButton* logOutButton;
 
 @property(nonatomic, retain) User* user;
+
+@property(nonatomic, retain) NSMutableArray* checkIns;
+@property(nonatomic, retain) NSMutableArray* comments;
 
 - (IBAction)logOutAction:(id)sender;
 

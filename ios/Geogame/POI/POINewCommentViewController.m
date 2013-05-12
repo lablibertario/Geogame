@@ -48,26 +48,48 @@
             return;
         }
         
-        [_comment setTitle:[_titleTextView text]];
+        [_comment setObject:[_titleTextView text] forKey:@"title"];
         [_comment setBody:[_bodyTextView text]];
+        [_comment setObject:[_bodyTextView text] forKey:@"body"];
+        [_comment setObject:[NSNumber numberWithBool:NO] forKey:@"isSafe"];
+    
+        [_comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(!error)
+            {
+                // Save user's relation.
+                PFUser *user = [PFUser currentUser];
+                PFRelation *userRelation = [user relationforKey:@"comments"];
+                [userRelation addObject:_comment];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(!error)
+                    {
+                        UIAlertView *message = [[UIAlertView alloc]
+                                                initWithTitle:@"Comment saved with success"
+                                                message:@"Your comment will be available after review."
+                                                delegate:nil
+                                                cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                        [message show];
+                    }
+                }];
+                
+                // Save waypoint's relation.
+                PFRelation *waypointRelation = [_waypoint relationforKey:@"comments"];
+                [waypointRelation addObject:_comment];
+                [_waypoint saveInBackground];
+            }
+        }];
     
         NSLog(@"Comment : %@", [_comment title]);
         NSLog(@"Comment : %@", [_comment body]);
         NSLog(@"User : %@", [_user username]);
         NSLog(@"Waypoint : %@", [[_comment waypoint] name]);
     
-        [_comment setWaypoint:_waypoint];
-        [_comment setUser: _user];
+        //[_comment setWaypoint:_waypoint];
+        //[_comment setUser: _user];
+    
         
-        [_comment saveAsPFObjectInBackground];
         
-        UIAlertView *message = [[UIAlertView alloc]
-                            initWithTitle:@"Comment saved with success"
-                            message:@"Your comment will be available after review."
-                            delegate:nil
-                            cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [message show];
-}
+        }
 
 
 #pragma mark - Keyboard delegate.
