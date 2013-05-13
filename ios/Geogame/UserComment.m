@@ -27,7 +27,7 @@
         _title = [object objectForKey:@"title"];
         _body = [object objectForKey:@"body"];
         _isSafe = [[object objectForKey:@"isSafe"] intValue];
-        createdAt = [object objectForKey:@"createdAt"];
+        createdAt = [object createdAt];
     }
     return self;
 }

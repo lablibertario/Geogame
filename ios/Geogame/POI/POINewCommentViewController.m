@@ -79,17 +79,13 @@
             }
         }];
     
-        NSLog(@"Comment : %@", [_comment title]);
-        NSLog(@"Comment : %@", [_comment body]);
-        NSLog(@"User : %@", [_user username]);
-        NSLog(@"Waypoint : %@", [[_comment waypoint] name]);
-    
+        //NSLog(@"Comment : %@", [_comment title]);
+        //NSLog(@"Comment : %@", [_comment body]);
+        //NSLog(@"User : %@", [_user username]);
+        //NSLog(@"Waypoint : %@", [[_comment waypoint] name]);
         //[_comment setWaypoint:_waypoint];
         //[_comment setUser: _user];
-    
-        
-        
-        }
+}
 
 
 #pragma mark - Keyboard delegate.

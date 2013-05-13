@@ -19,7 +19,7 @@
     if ( self = [super init])
     {
         _title = [object objectForKey:@"title"];
-        createdAt = [object objectForKey:@"createdAt"];
+        createdAt = [object createdAt];
     }
     return self;
 }

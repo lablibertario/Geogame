@@ -41,7 +41,7 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"User changed.");
+    //NSLog(@"User changed.");
 }
 
 #pragma mark - Table view data source

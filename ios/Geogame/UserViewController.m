@@ -26,6 +26,9 @@
 @synthesize usernameLabel = _usernameLabel;
 @synthesize emailLabel = _emailLabel;
 
+@synthesize locationLabel = _locationLabel;
+@synthesize checkInsLabel = _checkInsLabel;
+@synthesize commentsLabel = _commentsLabel;
 @synthesize comments = _comments;
 @synthesize checkIns = _checkIns;
 
@@ -72,6 +75,8 @@
     [_usernameLabel setText:[user username]];
     [_emailLabel setText:[user email]];
     
+    [_locationLabel setText:[user objectForKey:@"city"]];
+    
     // Load user picture.
     PFImageView *imageView = [[PFImageView alloc] init];
     imageView.image = [UIImage imageNamed:@"image-example.png"];
@@ -100,10 +105,10 @@
              for (int i = 0 ; i < [objects count] ; i++)
              {
                  [_checkIns addObject:[[UserCheckIn alloc] initWithPFObject:[objects objectAtIndex:i]]];
-                 NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+                 //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
              }
              
-             NSLog(@"Comments nb : %d", [_checkIns count]);
+             //NSLog(@"Comments nb : %d", [_checkIns count]);
              
              [_activityTableView reloadData];
          }
@@ -127,10 +132,10 @@
              for (int i = 0 ; i < [objects count] ; i++)
              {
                  [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
-                 NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+                 //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
              }
              
-             NSLog(@"Comments nb : %d", [_comments count]);
+             //NSLog(@"Comments nb : %d", [_comments count]);
              
              [_activityTableView reloadData];
          }
@@ -165,10 +170,12 @@
     switch (section)
     {
         case 0:
+            [_checkInsLabel setText:[NSString stringWithFormat:@"%lu check ins", (unsigned long)[_checkIns count]]];
             return [_checkIns count];
             break;
             
         case 1:
+            [_commentsLabel setText:[NSString stringWithFormat:@"%lu comments", (unsigned long)[_comments count]]];
             return [_comments count];
             break;
             
@@ -244,7 +251,10 @@
             
             UserComment* comment = [_comments objectAtIndex:indexPath.row];
             [[cell titleLabel] setText:[comment title]];
-            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",[comment createdAt]]];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"dd/MM/yyyy"];
+            NSString *stringFromDate = [formatter stringFromDate:[comment createdAt]];
+            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
             [[cell textView] setText:[comment body]];
             
             return cell;

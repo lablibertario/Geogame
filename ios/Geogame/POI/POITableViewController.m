@@ -186,9 +186,8 @@
         POICommentTableViewController *detailViewController = [segue destinationViewController];
         [detailViewController setWaypoint:[_waypoints objectAtIndex:selectedRowIndex.row]];
         
-        
-        Waypoint* waypoint = [_waypoints objectAtIndex:selectedRowIndex.row];
-        NSLog(@"WP ID : %@", [waypoint objectId]);
+        //Waypoint* waypoint = [_waypoints objectAtIndex:selectedRowIndex.row];
+        //NSLog(@"WP ID : %@", [waypoint objectId]);
     }
     
     // Segue to show waypoint's comments.
@@ -203,8 +202,8 @@
         POICommentTableViewController *commentTableViewController = [segue destinationViewController];
         [commentTableViewController setWaypoint:[_waypoints objectAtIndex:indexPath.row]];
         
-        Waypoint* waypoint = [_waypoints objectAtIndex:indexPath.row];
-        NSLog(@"WP ID : %@", [waypoint objectId]);
+        //Waypoint* waypoint = [_waypoints objectAtIndex:indexPath.row];
+        //NSLog(@"WP ID : %@", [waypoint objectId]);
     }
 }
 

@@ -45,10 +45,7 @@
 }
 
 - (void)loadLatestCommentInBackground
-{
-    if([_waypoint objectId] == nil)
-        NSLog(@"Invalid WP ID");
-        
+{        
     PFRelation *commentRelation = [_waypoint relationforKey:@"comments"];
     [[commentRelation query] whereKey:@"isSafe" equalTo:[NSNumber numberWithBool:YES]];
     [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -60,10 +57,10 @@
             for (int i = 0 ; i < [objects count] ; i++)
             {
                 [_comments addObject:[[UserComment alloc] initWithPFObject:[objects objectAtIndex:i]]];
-                NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+                //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
             }
             
-            NSLog(@"Comments nb : %d", [_comments count]);
+            //NSLog(@"Comments nb : %d", [_comments count]);
             
             [self.tableView reloadData];
         }
@@ -127,7 +124,7 @@
         POINewCommentViewController *destinationViewController = [segue destinationViewController];
         [destinationViewController setWaypoint:self.waypoint];
         
-        NSLog(@"Selected waypoint : %@", [[destinationViewController waypoint] name]);
+        //NSLog(@"Selected waypoint : %@", [[destinationViewController waypoint] name]);
     }
 }
 

@@ -20,7 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	NSLog(@"Start image picker.");
+	//NSLog(@"Start image picker.");
     [self startMediaBrowserFromViewController:self usingDelegate:self];
 }
 
@@ -30,10 +30,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *) Picker {
-    
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *) Picker
+{
+    [Picker dismissViewControllerAnimated:NO completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
-  
 }
 
 - (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info
@@ -85,16 +85,7 @@
             }
         }];
         [self dismissViewControllerAnimated:YES completion:nil];
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
 }
 
 -(IBAction) buttonClicked

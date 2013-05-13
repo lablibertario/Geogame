@@ -21,6 +21,10 @@
     UILabel* _emailLabel;
     UITableView* _activityTableView;
     
+    UILabel* _locationLabel;
+    UILabel* _checkInsLabel;
+    UILabel* _commentsLabel;
+    
     UIButton* _logOutButton;
     
     User* _user;
@@ -34,6 +38,9 @@
 @property(nonatomic, retain) IBOutlet UINavigationBar* navigationBar;
 @property(nonatomic, retain) IBOutlet UIImageView* imageView;
 @property(nonatomic, retain) IBOutlet UILabel* usernameLabel;
+@property(nonatomic, retain) IBOutlet UILabel* locationLabel;
+@property(nonatomic, retain) IBOutlet UILabel* checkInsLabel;
+@property(nonatomic, retain) IBOutlet UILabel* commentsLabel;
 @property(nonatomic, retain) IBOutlet UILabel* emailLabel;
 @property(nonatomic, retain) IBOutlet UITableView* activityTableView;
 

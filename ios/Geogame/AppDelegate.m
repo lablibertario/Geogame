@@ -123,7 +123,7 @@
     if([oldLocation distanceFromLocation:newLocation] < 2)
         return;
     
-    NSLog(@"Location counter : %d", _locationCounter);
+    //NSLog(@"Location counter : %d", _locationCounter);
     
     // Save every 10 updates.
     while(_locationCounter++ < 10) return;

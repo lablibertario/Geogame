@@ -103,7 +103,7 @@
          if (!error)
          {
              // The find succeeded.
-             NSLog(@"Successfully retrieved %d news.", objects.count);
+             //NSLog(@"Successfully retrieved %d news.", objects.count);
              
              // Parse all objects.
              _news = [[NSMutableArray alloc] initWithCapacity:objects.count];
@@ -125,7 +125,7 @@
 
 - (IBAction)refreshNews:(id)sender
 {
-    NSLog(@"Tag gesture on the navigation bar to refresh content.");
+    //NSLog(@"Tag gesture on the navigation bar to refresh content.");
     [self loadLatestNewsInBackground];
 }
 

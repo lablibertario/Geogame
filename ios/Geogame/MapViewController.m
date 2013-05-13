@@ -85,15 +85,13 @@
 
 - (void)refreshInterface
 {
-
-    
     // Load annotations.
     _annotations = [[NSMutableArray alloc] initWithCapacity:[_waypoints count]];
     for(int i=0; i<[_waypoints count]; i++)
         [_annotations addObject:[[Annotation alloc] initWithWaypoint:[_waypoints objectAtIndex:i]]];
     [_mapView removeAnnotations:_mapView.annotations];
     [_mapView addAnnotations:_annotations];
-    NSLog(@"Nb annotations (from WC) : %d", [_annotations count]);
+    //NSLog(@"Nb annotations (from WC) : %d", [_annotations count]);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -147,7 +145,7 @@
 
 - (IBAction)showNavigationBar:(id)sender
 {
-    NSLog(@"ShowNavigationBar");
+    //NSLog(@"ShowNavigationBar");
     if([_navigationBar isHidden])
     {
         [_navigationBar setHidden:false];
@@ -233,7 +231,7 @@
          if (!error)
          {
              // The find succeeded.
-             NSLog(@"Successfully retrieved %d waypoints.", objects.count);
+             //NSLog(@"Successfully retrieved %d waypoints.", objects.count);
              
              // Parse all objects.
              _waypoints = [[NSMutableArray alloc] initWithCapacity:objects.count];

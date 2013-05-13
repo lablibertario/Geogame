@@ -7,6 +7,7 @@
 //
 
 #import "QuizTableViewController.h"
+#import "QuizQuestion.h"
 
 @interface QuizTableViewController ()
 
@@ -30,6 +31,51 @@
     [super viewDidLoad];
 
     //_quiz = [[Quiz alloc] init];
+}
+
+- (void)loadQuizInBackground
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Quiz"];
+    //[query includeKey:@"objectId"];
+    [query whereKey:@"waypoint" equalTo:_waypoint];
+    [query whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
+    
+    // Find objets in background.
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        /*
+        PFObject* quiz = [objects objectAtIndex:1];
+        PFQuery *query = [PFQuery queryWithClassName:@"Quiz"];
+        //[query includeKey:@"objectId"];
+        [query whereKey:@"waypoint" equalTo:_waypoint];
+        [query whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
+        
+        if (!error)
+        {
+            // Parse all objects.
+            _ = [[NSMutableArray alloc] initWithCapacity:objects.count];
+            for (int i = 0 ; i < [objects count] ; i++)
+            {
+                //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectForKey:@"objectId"]);
+                [_questions addObject:[[QuizQuestion alloc] initWithPFObject:[objects objectAtIndex:i]]];
+            }
+            
+            // Reload table view.
+            [self.tableView reloadData];
+        }
+        else
+        {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Unable to load nearest waypoints. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [message show];
+            return;
+            
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+         
+        */ 
+
+    }];
 }
 
 - (void)didReceiveMemoryWarning

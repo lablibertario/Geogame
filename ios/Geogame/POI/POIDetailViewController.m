@@ -15,7 +15,7 @@
 #import "Annotation.h"
 #import "User.h"
 #import "UserCheckIn.h"
-
+#import "MapViewController.h"
 
 @implementation POIDetailViewController
 
@@ -113,8 +113,6 @@
     // Segue to show more informations about a waypoint.
     if ([[segue identifier] isEqualToString:@"ShowPOIQuiz"])
     {
-        NSLog(@"Check In !");
-        
         PFGeoPoint* userGeoPoint = [[User currentUser] objectForKey:@"location"];
         CLLocationCoordinate2D userCoordinate;
         userCoordinate.latitude = userGeoPoint.latitude;
@@ -149,7 +147,7 @@
                     if(!error)
                     {
                         // Save waypoint's relation.
-                        NSLog(@"ID : %@", [_waypoint objectId]);
+                        //NSLog(@"ID : %@", [_waypoint objectId]);
                         PFRelation *waypointRelation = [_waypoint relationforKey:@"checkIns"];
                         [waypointRelation addObject:checkIn];
                         [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -186,6 +184,17 @@
         POICommentTableViewController *commentTableViewController = [segue destinationViewController];
         [commentTableViewController setWaypoint:self.waypoint];
     }
+    /*
+    // Segue to show waypoint's comments.
+    if ([[segue identifier] isEqualToString:@"ShowPOIMapSegue"])
+    {
+        // Create a destination controller and add selected waypoint.
+        MapViewController *mapViewController = [segue destinationViewController];
+        [mapViewController.mapView setCenterCoordinate:[self.waypoint coordinate]];
+        
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([self.waypoint coordinate], 1000, 1000);
+        [mapViewController.mapView setRegion:region animated:YES];
+    }*/
 }
 
 - (void)didReceiveMemoryWarning
