@@ -24,6 +24,7 @@
     UILabel* _locationLabel;
     UILabel* _checkInsLabel;
     UILabel* _commentsLabel;
+    UILabel* _scoreLabel;
     
     UIButton* _logOutButton;
     
@@ -41,6 +42,7 @@
 @property(nonatomic, retain) IBOutlet UILabel* locationLabel;
 @property(nonatomic, retain) IBOutlet UILabel* checkInsLabel;
 @property(nonatomic, retain) IBOutlet UILabel* commentsLabel;
+@property(nonatomic, retain) IBOutlet UILabel* scoreLabel;
 @property(nonatomic, retain) IBOutlet UILabel* emailLabel;
 @property(nonatomic, retain) IBOutlet UITableView* activityTableView;
 

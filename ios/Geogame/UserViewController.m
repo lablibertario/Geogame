@@ -29,6 +29,7 @@
 @synthesize locationLabel = _locationLabel;
 @synthesize checkInsLabel = _checkInsLabel;
 @synthesize commentsLabel = _commentsLabel;
+@synthesize scoreLabel = _scoreLabel;
 @synthesize comments = _comments;
 @synthesize checkIns = _checkIns;
 
@@ -88,6 +89,8 @@
     
     // Load activity.
     
+   [_scoreLabel setText:[NSString stringWithFormat:@"%lu points", (unsigned long)[[[User currentUser] objectForKey:@"score"] integerValue]]];
+    
     [self loadUserCheckInsInBackground];
     [self loadUserCommentsInBackground];
 }
@@ -123,6 +126,7 @@
 - (void)loadUserCommentsInBackground
 {
     PFRelation *commentRelation = [[User currentUser] relationforKey:@"comments"];
+    [[commentRelation query] whereKey:@"isSafe" equalTo:[NSNumber numberWithBool:YES]];
     [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
@@ -185,6 +189,9 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
 
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

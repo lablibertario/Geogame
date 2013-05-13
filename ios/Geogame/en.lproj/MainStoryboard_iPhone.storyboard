@@ -237,6 +237,14 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1000 points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBM-7s-5ET">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="48T-De-XeI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -247,10 +255,13 @@
                             <constraint firstItem="Uz4-tS-QGz" firstAttribute="leading" secondItem="hQX-2m-qXl" secondAttribute="leading" type="default" id="9Rl-gK-2eh"/>
                             <constraint firstItem="PXA-aa-nA4" firstAttribute="top" secondItem="zUV-ph-pBs" secondAttribute="top" constant="20" symbolic="YES" type="default" id="Apz-NH-Rib"/>
                             <constraint firstItem="ipe-GN-MGS" firstAttribute="top" secondItem="zUV-ph-pBs" secondAttribute="top" constant="20" symbolic="YES" type="default" id="Cbq-BE-WKT"/>
+                            <constraint firstItem="kBM-7s-5ET" firstAttribute="leading" secondItem="Uz4-tS-QGz" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Cdl-t3-Wt6"/>
                             <constraint firstItem="0HD-wU-wUp" firstAttribute="bottom" secondItem="zUV-ph-pBs" secondAttribute="bottom" type="default" id="GSX-AM-A6Z"/>
+                            <constraint firstItem="kBM-7s-5ET" firstAttribute="baseline" secondItem="Uz4-tS-QGz" secondAttribute="baseline" type="default" id="Hai-iA-Iav"/>
                             <constraint firstItem="0HD-wU-wUp" firstAttribute="leading" secondItem="zUV-ph-pBs" secondAttribute="leading" type="default" id="Kpw-3f-vXp"/>
                             <constraint firstItem="hoz-Ny-C0N" firstAttribute="leading" secondItem="Uz4-tS-QGz" secondAttribute="leading" type="default" id="PhI-iz-EeA"/>
                             <constraint firstItem="Uz4-tS-QGz" firstAttribute="top" secondItem="hQX-2m-qXl" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="XDf-Kc-P1M"/>
+                            <constraint firstItem="kBM-7s-5ET" firstAttribute="top" secondItem="hQX-2m-qXl" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="gOX-Qp-zb7"/>
                             <constraint firstItem="hQX-2m-qXl" firstAttribute="trailing" secondItem="Ozx-fw-dm1" secondAttribute="trailing" type="default" id="h3C-HN-R84"/>
                             <constraint firstItem="Ozx-fw-dm1" firstAttribute="leading" secondItem="PXA-aa-nA4" secondAttribute="leading" type="default" id="lDS-we-vBd"/>
                             <constraint firstItem="0HD-wU-wUp" firstAttribute="trailing" secondItem="zUV-ph-pBs" secondAttribute="trailing" type="default" id="lan-2w-IJ0"/>
@@ -278,6 +289,7 @@
                         <outlet property="emailLabel" destination="Ozx-fw-dm1" id="s0Z-Lh-DEf"/>
                         <outlet property="imageView" destination="ipe-GN-MGS" id="iNO-9Y-Dxv"/>
                         <outlet property="locationLabel" destination="hQX-2m-qXl" id="2Yx-e7-2HX"/>
+                        <outlet property="scoreLabel" destination="kBM-7s-5ET" id="XDJ-Lb-Agk"/>
                         <outlet property="usernameLabel" destination="PXA-aa-nA4" id="m14-GI-0MW"/>
                     </connections>
                 </viewController>
@@ -1308,6 +1320,7 @@
                 <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="logOutButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="usernameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

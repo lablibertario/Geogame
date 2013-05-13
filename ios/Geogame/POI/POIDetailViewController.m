@@ -128,8 +128,8 @@
         {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You are so far away! You need to be in 50 meters around the area to check in !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [message show];
-            
-            //return;
+        
+            return;
         }
         
         // Create a new checkIn.
@@ -153,6 +153,14 @@
                         [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if(!error)
                             {
+                                // Update user's score.
+                                 PFUser *user = [PFUser currentUser];
+                                int score = [[user objectForKey:@"score"] integerValue];
+                                score += [_waypoint points];
+                                
+                                [user setObject:[NSString stringWithFormat:@"%d", score] forKey:@"score"];
+                                [user saveInBackground];
+                                
                                 UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
                                 [message show];
                             }
