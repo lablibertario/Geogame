@@ -174,7 +174,6 @@
 
     // Stop table refresh activity indicator.
     [self.refreshControl endRefreshing];
-    [self.refreshControl setHidden:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

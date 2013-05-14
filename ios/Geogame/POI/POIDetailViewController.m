@@ -126,56 +126,86 @@
         NSLog(@"Distance : %f", distance);
         if(distance > 2000.0f)
         {
+            
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You are so far away! You need to be in 50 meters around the area to check in !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [message show];
-        
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
             return;
         }
-        
-        // Create a new checkIn.
-        UserCheckIn* checkIn = (UserCheckIn*)[PFObject objectWithClassName:@"UserCheckIn"];
-        [checkIn setObject:[_waypoint name] forKey:@"title"];
-        
-        [checkIn saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        else
+        {
+        PFRelation *userRelation = [[User currentUser] relationforKey:@"checkIns"];
+        NSDate *now = [NSDate date];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
+        [components setHour:1];
+        NSDate *today1am = [calendar dateFromComponents:components];
+        [[userRelation query] whereKey:@"createdAt" greaterThanOrEqualTo:today1am];
+        [[userRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if(!error)
             {
-                // Save user's relation.
-                PFUser *user = [PFUser currentUser];
-                PFRelation *userRelation = [user relationforKey:@"checkIns"];
-                [userRelation addObject:checkIn];
-                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if(!error)
-                    {
-                        // Save waypoint's relation.
-                        //NSLog(@"ID : %@", [_waypoint objectId]);
-                        PFRelation *waypointRelation = [_waypoint relationforKey:@"checkIns"];
-                        [waypointRelation addObject:checkIn];
-                        [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if(!error)
-                            {
-                                // Update user's score.
-                                 PFUser *user = [PFUser currentUser];
-                                int score = [[user objectForKey:@"score"] integerValue];
-                                score += [_waypoint points];
-                                
-                                [user setObject:[NSString stringWithFormat:@"%d", score] forKey:@"score"];
-                                [user saveInBackground];
-                                
-                                UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                                [message show];
-                            }
-                            else
-                            {
-                                NSLog(@"Error while CheckIn save.");
-                            }
-                        }];
-                    }
-                }];
+                if ([objects count] > 0) {
+                    
+                    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"You already check in here today !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                    [message show];
+                    
+                    return;
+                }
+                else
+                {
+                    // Create a new checkIn.
+                    UserCheckIn* checkIn = (UserCheckIn*)[PFObject objectWithClassName:@"UserCheckIn"];
+                    [checkIn setObject:[_waypoint name] forKey:@"title"];
+                    
+                    [checkIn saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if(!error)
+                        {
+                            // Save user's relation.
+                            PFUser *user = [PFUser currentUser];
+                            PFRelation *userRelation = [user relationforKey:@"checkIns"];
+                            [userRelation addObject:checkIn];
+                            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                if(!error)
+                                {
+                                    // Save waypoint's relation.
+                                    //NSLog(@"ID : %@", [_waypoint objectId]);
+                                    PFRelation *waypointRelation = [_waypoint relationforKey:@"checkIns"];
+                                    [waypointRelation addObject:checkIn];
+                                    [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                        if(!error)
+                                        {
+                                            // Update user's score.
+                                            PFUser *user = [PFUser currentUser];
+                                            int score = [[user objectForKey:@"score"] integerValue];
+                                            score += [_waypoint points];
+                                            
+                                            [user setObject:[NSString stringWithFormat:@"%d", score] forKey:@"score"];
+                                            [user saveInBackground];
+                                            
+                                            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                            [message show];
+                                        }
+                                        else
+                                        {
+                                            NSLog(@"Error while CheckIn save.");
+                                        }
+                                    }];
+                                }
+                            }];
+                        }
+                    }];
+                    
+                    
+
+                }
             }
         }];
-        
+        }
         QuizTableViewController *detailViewController = [segue destinationViewController];
         [detailViewController setWaypoint:_waypoint];
+        
     }
     
     if ([[segue identifier] isEqualToString:@"NewPOIComment"])

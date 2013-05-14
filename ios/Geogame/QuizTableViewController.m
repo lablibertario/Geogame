@@ -7,6 +7,7 @@
 //
 
 #import "QuizTableViewController.h"
+#import "QuizAnswerTableViewController.h"
 #import "QuizQuestion.h"
 
 @interface QuizTableViewController ()
@@ -16,64 +17,97 @@
 @implementation QuizTableViewController
 
 @synthesize waypoint = _waypoint;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize choices = _choices;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    //_quiz = [[Quiz alloc] init];
+    _lockedQuestions = [[NSMutableArray alloc] initWithObjects:NO,NO,NO,NO, nil];
+    
+    [self loadQuizInBackground];
+}
+
+- (IBAction)submitQuiz:(id)submitButton
+{
+    NSLog(@"Submit quiz");
+    
+    int score = 0;
+    
+    for(int i=0; i< [_choices count]; i++)
+    {
+        if([_choices objectAtIndex:i] == nil)
+        {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Please complete all the quiz before submit." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [message show];
+            
+            return;
+        }
+        
+        if((int)[_choices objectAtIndex:i] == [[_questions objectAtIndex:i] correctAnswer])
+            score++;
+    }
+    
+    if(score == [_questions count])
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Perfect !" message:@"All right !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [message show];
+    }
+}
+
+- (void)lockQuestion:(int)question
+{
+    //[_lockedQuestions setObject:YES atIndexedSubscript:1];
 }
 
 - (void)loadQuizInBackground
 {
+    if ([_waypoint objectId] == nil)
+    {
+        return;
+    }
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Quiz"];
-    //[query includeKey:@"objectId"];
     [query whereKey:@"waypoint" equalTo:_waypoint];
     [query whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
     
     // Find objets in background.
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
     {
-        /*
-        PFObject* quiz = [objects objectAtIndex:1];
-        PFQuery *query = [PFQuery queryWithClassName:@"Quiz"];
-        //[query includeKey:@"objectId"];
-        [query whereKey:@"waypoint" equalTo:_waypoint];
-        [query whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
-        
-        if (!error)
+        if(!error && [object objectId] != nil)
         {
-            // Parse all objects.
-            _ = [[NSMutableArray alloc] initWithCapacity:objects.count];
-            for (int i = 0 ; i < [objects count] ; i++)
-            {
-                //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectForKey:@"objectId"]);
-                [_questions addObject:[[QuizQuestion alloc] initWithPFObject:[objects objectAtIndex:i]]];
-            }
-            
-            // Reload table view.
-            [self.tableView reloadData];
+            PFRelation *questionRelation = [object relationforKey:@"questions"];
+            [[questionRelation query] whereKey:@"isEnabled" equalTo:[NSNumber numberWithBool:YES]];
+            [[questionRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+             {
+                 if (!error)
+                 {
+                     // Parse all objects.
+                     _choices = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+                     _questions = [[NSMutableArray alloc] initWithCapacity:objects.count];
+                     for (int i = 0 ; i < [objects count] ; i++)
+                     {
+                         [_questions addObject:[[QuizQuestion alloc] initWithPFObject:[objects objectAtIndex:i]]];
+                         //NSLog(@"Objects for id : %@", [(PFObject*)[objects objectAtIndex:i] objectId]);
+                     }
+                     
+                     //NSLog(@"Comments nb : %d", [_comments count]);
+                     
+                     [self.tableView reloadData];
+                 }
+                 else
+                 {
+                     // Log details of the failure
+                     NSLog(@"Error: %@ %@", error, [error userInfo]);
+                 }
+             }];
+
         }
         else
-        {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Unable to load nearest waypoints. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [message show];
-            return;
-            
+        {            
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
-         
-        */ 
 
     }];
 }
@@ -104,7 +138,29 @@
     if (cell == nil)
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
+    QuizQuestion* question = [_questions objectAtIndex:indexPath.row];
+    NSLog(@"Question ID : %@", [question objectId]);
+    [[cell textLabel] setText:[question name]];
+    
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Segue to show more informations about a waypoint.
+    if ([[segue identifier] isEqualToString:@"ShowQuizQuestionAnswerSegue"])
+    {
+        NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
+        QuizAnswerTableViewController *detailViewController = [segue destinationViewController];
+        QuizQuestion* question = [_questions objectAtIndex:selectedRowIndex.row];
+        NSLog(@"Question : %@", [question name]);
+        
+        [detailViewController setQuestion:question];
+        [detailViewController setQuestionNb:selectedRowIndex.row];
+        
+        //Waypoint* waypoint = [_waypoints objectAtIndex:selectedRowIndex.row];
+        //NSLog(@"WP ID : %@", [waypoint objectId]);
+    }
 }
 
 /*
@@ -150,13 +206,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 @end

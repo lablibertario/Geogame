@@ -14,8 +14,17 @@
 {
     Waypoint* _waypoint;
     NSMutableArray* _questions;
+    NSMutableArray* _choices;
+    
+    NSMutableArray* _lockedQuestions;
 }
 
 @property(nonatomic,retain) Waypoint* waypoint;
+@property(nonatomic, retain) NSMutableArray* choices;
+
+- (void)lockQuestion:(int)question;
+
+- (IBAction)submitQuiz:(id)submitButton;
+
 
 @end

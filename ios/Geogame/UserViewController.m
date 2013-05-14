@@ -97,9 +97,9 @@
 
 - (void)loadUserCheckInsInBackground
 {
-    PFRelation *commentRelation = [[User currentUser] relationforKey:@"checkIns"];
-    [[commentRelation query] orderByDescending:@"createdAt"];
-    [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    PFRelation *checkInRelation = [[User currentUser] relationforKey:@"checkIns"];
+    [[checkInRelation query] addDescendingOrder:@"createdAt"];
+    [[checkInRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
          {
@@ -127,6 +127,7 @@
 {
     PFRelation *commentRelation = [[User currentUser] relationforKey:@"comments"];
     [[commentRelation query] whereKey:@"isSafe" equalTo:[NSNumber numberWithBool:YES]];
+    [[commentRelation query] addDescendingOrder:@"createdAt"];
     [[commentRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)

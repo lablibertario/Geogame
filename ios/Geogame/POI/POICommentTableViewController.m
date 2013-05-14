@@ -97,7 +97,10 @@
     
     UserComment* comment = [_comments objectAtIndex:indexPath.row];
     [[cell titleLabel] setText:[comment title]];
-    [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",[comment createdAt]]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/MM/yyyy"];
+    NSString *stringFromDate = [formatter stringFromDate:[comment createdAt]];
+    [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
     [[cell textView] setText:[comment body]];
     
     return cell;

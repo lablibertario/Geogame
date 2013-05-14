@@ -28,6 +28,7 @@
 		4E85CCA816D6991600FBD69B /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E85CCA716D6991600FBD69B /* News.m */; };
 		4E85CCAB16D69BCE00FBD69B /* NewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E85CCAA16D69BCE00FBD69B /* NewsController.m */; };
 		4E85CCAE16D6A27400FBD69B /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E85CCAD16D6A27400FBD69B /* NewsDetailViewController.m */; };
+		4E8A5B6417411FEC00DC16E8 /* QuizAnswerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8A5B6317411FEC00DC16E8 /* QuizAnswerTableViewController.m */; };
 		4E9E5D4616D3C07100DA4382 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E5D4516D3C07100DA4382 /* MapKit.framework */; };
 		4E9E5D4916D3C5CD00DA4382 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */; };
 		4EA34C8516EFABAE0073C440 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA34C8416EFABAE0073C440 /* DiscoverViewController.m */; };
@@ -98,6 +99,8 @@
 		4EF29B1D17267C9F0024656F /* UserPictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF29B1C17267C9F0024656F /* UserPictureTableViewCell.m */; };
 		4EF29B20172687DA0024656F /* UserProfileDeleteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */; };
 		4EF7CC80173939700012D2E4 /* QuizTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */; };
+		4EF97CC017414B7000CA829D /* woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EF97CBF17414B7000CA829D /* woman.png */; };
+		4EF97CC217414BFD00CA829D /* homme.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EF97CC117414BFD00CA829D /* homme.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +153,8 @@
 		4E85CCAA16D69BCE00FBD69B /* NewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsController.m; sourceTree = "<group>"; };
 		4E85CCAC16D6A27400FBD69B /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		4E85CCAD16D6A27400FBD69B /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
+		4E8A5B6217411FEC00DC16E8 /* QuizAnswerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizAnswerTableViewController.h; sourceTree = "<group>"; };
+		4E8A5B6317411FEC00DC16E8 /* QuizAnswerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizAnswerTableViewController.m; sourceTree = "<group>"; };
 		4E9E5D4516D3C07100DA4382 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4E9E5D4716D3C5CD00DA4382 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		4E9E5D4816D3C5CD00DA4382 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
@@ -247,6 +252,8 @@
 		4EF29B1F172687DA0024656F /* UserProfileDeleteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileDeleteTableCell.m; sourceTree = "<group>"; };
 		4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizTableViewController.h; sourceTree = "<group>"; };
 		4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizTableViewController.m; sourceTree = "<group>"; };
+		4EF97CBF17414B7000CA829D /* woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = woman.png; sourceTree = "<group>"; };
+		4EF97CC117414BFD00CA829D /* homme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homme.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +307,8 @@
 		4ECF659C16FB92980086BA73 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4EDE55D2173FCB2700D9BDED /* CheckInTableViewCell.h */,
+				4EDE55D3173FCB2700D9BDED /* CheckInTableViewCell.m */,
 				4EA34C8616EFAD3A0073C440 /* DetailViewController.h */,
 				4EA34C8716EFAD3A0073C440 /* DetailViewController.m */,
 				4EA34C8316EFABAE0073C440 /* DiscoverViewController.h */,
@@ -324,6 +333,8 @@
 				4ED635931722990E009B07BF /* POITableViewCell.m */,
 				4ED6358E172298AE009B07BF /* POITableViewController.h */,
 				4ED6358F172298AE009B07BF /* POITableViewController.m */,
+				4E8A5B6217411FEC00DC16E8 /* QuizAnswerTableViewController.h */,
+				4E8A5B6317411FEC00DC16E8 /* QuizAnswerTableViewController.m */,
 				4EF7CC7E173939700012D2E4 /* QuizTableViewController.h */,
 				4EF7CC7F173939700012D2E4 /* QuizTableViewController.m */,
 				4E5BD18E16D2BD7A00EBE715 /* SearchViewController.h */,
@@ -346,8 +357,6 @@
 				4E80E50317216C5100DC9C45 /* UserViewController.m */,
 				4ECF659116FB7D860086BA73 /* WaypointViewController.h */,
 				4ECF659216FB7D860086BA73 /* WaypointViewController.m */,
-				4EDE55D2173FCB2700D9BDED /* CheckInTableViewCell.h */,
-				4EDE55D3173FCB2700D9BDED /* CheckInTableViewCell.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -367,6 +376,8 @@
 				4ED6359617229E39009B07BF /* iconTimeline.png */,
 				4ED6359717229E39009B07BF /* iconTimeline@2x.png */,
 				4ECF659816FB90C10086BA73 /* logo@2x.png */,
+				4EF97CC117414BFD00CA829D /* homme.png */,
+				4EF97CBF17414B7000CA829D /* woman.png */,
 				4ED6359917229E39009B07BF /* iconTimelineSelected@2x.png */,
 				4EE0BF9C16D2525A00D6EA5C /* first.png */,
 				4E08BBDE16D4DA5600777896 /* man.png */,
@@ -626,6 +637,8 @@
 				4ED635AA1722A29A009B07BF /* backgroundTabBar@2x.png in Resources */,
 				4EE8441A1722FFCF00F1F482 /* image-example.jpg in Resources */,
 				4ECFE230173CF2180072F62D /* Geogame.png in Resources */,
+				4EF97CC017414B7000CA829D /* woman.png in Resources */,
+				4EF97CC217414BFD00CA829D /* homme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +712,7 @@
 				4EE46C8F173F78C100836FDE /* POICommentTableViewCell.m in Sources */,
 				4EDE55D4173FCB2700D9BDED /* CheckInTableViewCell.m in Sources */,
 				4E14B896173FCC7400E7DCC1 /* UserCheckIn.m in Sources */,
+				4E8A5B6417411FEC00DC16E8 /* QuizAnswerTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
