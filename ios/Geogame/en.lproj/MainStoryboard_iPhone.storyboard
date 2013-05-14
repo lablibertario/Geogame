@@ -716,6 +716,7 @@
                                         </state>
                                         <connections>
                                             <action selector="checkInAction:" destination="xqZ-Vt-wg6" eventType="touchUpInside" id="bFx-Vl-CaT"/>
+                                            <action selector="showPOIInMaps:" destination="xqZ-Vt-wg6" eventType="touchUpInside" id="hKH-Ab-7xB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtl-mg-lr1">
@@ -1255,6 +1256,7 @@
             <relationships>
                 <relationship kind="action" name="checkInAction:" candidateClass="UIButton"/>
                 <relationship kind="action" name="showCommentsAction:" candidateClass="UIButton"/>
+                <relationship kind="action" name="showPOIInMaps:"/>
                 <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="showCommentsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="waypointDescriptionTextView" candidateClass="UITextView"/>
@@ -1356,6 +1358,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="YIp-2L-nsl"/>
-        <segue reference="CnA-8P-6pH"/>
+        <segue reference="OAh-00-0yR"/>
     </inferredMetricsTieBreakers>
 </document>

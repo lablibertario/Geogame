@@ -200,11 +200,11 @@
     switch (section)
     {
         case 0:
-            return @"Check Ins";
+            return @"Latest Check-Ins";
             break;
             
         case 1:
-            return @"Comments";
+            return @"Latest Comments";
             break;
             
         default:

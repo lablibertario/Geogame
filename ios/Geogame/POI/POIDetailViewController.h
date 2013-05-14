@@ -38,6 +38,8 @@
 
 - (IBAction)checkInAction:(UIButton*)checkInButton;
 
+- (IBAction)showPOIInMaps:(id)sender;
+
 - (IBAction)showCommentsAction:(UIButton*)showCommentsButton;
 
 @end

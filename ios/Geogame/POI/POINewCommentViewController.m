@@ -68,14 +68,19 @@
                         int score = [[user objectForKey:@"score"] integerValue];
                         score += 1;
                         [user setObject:[NSString stringWithFormat:@"%d", score] forKey:@"score"];
-                        [user saveInBackground];
+                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if(!error)
+                            {
+                                UIAlertView *message = [[UIAlertView alloc]
+                                                        initWithTitle:@"Comment saved with success"
+                                                        message:@"Your comment will be available after review."
+                                                        delegate:nil
+                                                        cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                [message show];
+
+                            }
+                        }];
                         
-                        UIAlertView *message = [[UIAlertView alloc]
-                                                initWithTitle:@"Comment saved with success"
-                                                message:@"Your comment will be available after review."
-                                                delegate:nil
-                                                cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                        [message show];
                     }
                 }];
                 

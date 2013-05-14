@@ -103,6 +103,46 @@
 { 
 }
 
+- (IBAction)showPOIInMaps:(id)sender
+{
+    NSString *destinationAddress = [_waypoint name];
+    
+    Class itemClass = [MKMapItem class];
+    if (itemClass && [itemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
+        
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        
+        [geocoder geocodeAddressString:destinationAddress completionHandler:^(NSArray *placemarks, NSError *error) {
+            if([placemarks count] > 0) {
+                
+                MKPlacemark *placeMark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+                
+                MKMapItem *mapItem = [[MKMapItem alloc]initWithPlacemark:placeMark];
+                
+                MKMapItem *mapItem2 = [MKMapItem mapItemForCurrentLocation];
+                
+                
+                NSArray *mapItems = @[mapItem, mapItem2];
+                
+                NSDictionary *options = @{
+                                          MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving,
+                                          MKLaunchOptionsMapTypeKey:
+                                              [NSNumber numberWithInteger:MKMapTypeStandard],
+                                          MKLaunchOptionsShowsTrafficKey:@YES
+                                          };
+                
+                [MKMapItem openMapsWithItems:mapItems launchOptions:options];
+                
+            } else {
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Unable to find the route." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                [message show];
+
+            }
+        }];
+        return;
+    }
+}
+
 - (IBAction)showCommentsAction:(UIButton *)showCommentsButton
 {
     NSLog(@"Not supported yet !");

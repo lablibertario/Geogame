@@ -13,6 +13,7 @@
 		4E0B6439173D179E001A649E /* UserProfileEditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0B6438173D179E001A649E /* UserProfileEditableTableViewCell.m */; };
 		4E111A3816D2596400678700 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E111A3716D2596400678700 /* LoginViewController.m */; };
 		4E14B896173FCC7400E7DCC1 /* UserCheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E14B895173FCC7400E7DCC1 /* UserCheckIn.m */; };
+		4E3F171817422B0E00D93AF4 /* POIMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3F171717422B0E00D93AF4 /* POIMapViewController.m */; };
 		4E47DF5F16D7A71A008CBAFA /* UserPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E47DF5E16D7A71A008CBAFA /* UserPicture.m */; };
 		4E5AD3FA16D36FC400F8FD44 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AD3F916D36FC400F8FD44 /* Category.m */; };
 		4E5BD19016D2BD7A00EBE715 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5BD18F16D2BD7A00EBE715 /* SearchViewController.m */; };
@@ -123,6 +124,8 @@
 		4E111A3716D2596400678700 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4E14B894173FCC7400E7DCC1 /* UserCheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCheckIn.h; sourceTree = "<group>"; };
 		4E14B895173FCC7400E7DCC1 /* UserCheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCheckIn.m; sourceTree = "<group>"; };
+		4E3F171617422B0E00D93AF4 /* POIMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIMapViewController.h; sourceTree = "<group>"; };
+		4E3F171717422B0E00D93AF4 /* POIMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIMapViewController.m; sourceTree = "<group>"; };
 		4E47DF5D16D7A71A008CBAFA /* UserPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPicture.h; sourceTree = "<group>"; };
 		4E47DF5E16D7A71A008CBAFA /* UserPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPicture.m; sourceTree = "<group>"; };
 		4E5AD3F816D36FC400F8FD44 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				4E80E50317216C5100DC9C45 /* UserViewController.m */,
 				4ECF659116FB7D860086BA73 /* WaypointViewController.h */,
 				4ECF659216FB7D860086BA73 /* WaypointViewController.m */,
+				4E3F171617422B0E00D93AF4 /* POIMapViewController.h */,
+				4E3F171717422B0E00D93AF4 /* POIMapViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -713,6 +718,7 @@
 				4EDE55D4173FCB2700D9BDED /* CheckInTableViewCell.m in Sources */,
 				4E14B896173FCC7400E7DCC1 /* UserCheckIn.m in Sources */,
 				4E8A5B6417411FEC00DC16E8 /* QuizAnswerTableViewController.m in Sources */,
+				4E3F171817422B0E00D93AF4 /* POIMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
