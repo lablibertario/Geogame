@@ -18,6 +18,7 @@
 {
     if ( self = [super init])
     {
+        self.objectId = [object objectId];
         _title = [object objectForKey:@"title"];
         createdAt = [object createdAt];
     }

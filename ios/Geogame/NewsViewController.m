@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "NewsViewController.h"
 #import "NewsDetailViewController.h"
+#import "NewsTableViewCell.h"
 
 @interface NewsViewController ()
 
@@ -28,6 +29,12 @@
      setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
      forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
+    
+    
+    // Set up refresh control.
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(loadLatestNewsInBackground) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
     
     // Load latest news.
     [self loadLatestNewsInBackground];
@@ -58,11 +65,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"NewsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     
-    [[cell textLabel] setText:[[_news objectAtIndex:indexPath.row] title]];
-    [[cell detailTextLabel] setText:[[_news objectAtIndex:indexPath.row] text]];
+    [[cell titleLabel] setText:[[_news objectAtIndex:indexPath.row] title]];
+    [[cell textView] setText:[[_news objectAtIndex:indexPath.row] text]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/MM/yyyy"];
+    NSString *stringFromDate = [formatter stringFromDate:[[_news objectAtIndex:indexPath.row] updatedAt]];
+    [[cell dateLabel] setText:stringFromDate];
     return cell;
 }
 
@@ -97,7 +108,8 @@
 - (void)loadLatestNewsInBackground
 {
     PFQuery *query = [PFQuery queryWithClassName:@"News"];
-    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    
+    [query addDescendingOrder:@"updatedAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
@@ -119,6 +131,8 @@
              NSLog(@"Error: %@ %@", error, [error userInfo]);
          }
      }];
+    
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - Actions

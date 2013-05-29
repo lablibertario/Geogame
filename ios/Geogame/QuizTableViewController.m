@@ -9,6 +9,7 @@
 #import "QuizTableViewController.h"
 #import "QuizAnswerTableViewController.h"
 #import "QuizQuestion.h"
+#import "User.h"
 
 @interface QuizTableViewController ()
 
@@ -22,6 +23,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar
+     setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
+     forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
+    
+   
 
     _lockedQuestions = [[NSMutableArray alloc] initWithObjects:NO,NO,NO,NO, nil];
     
@@ -32,11 +40,25 @@
 {
     NSLog(@"Submit quiz");
     
-    int score = 0;
+    PFRelation *userRelation = [[User currentUser] relationforKey:@"quizs"];
+    [[userRelation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error)
+        {
+            if ([objects count] > 0) {
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Quiz already submited !." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                [message show];
+                return;
+            }
+            else
+            {
+
     
-    for(int i=0; i< [_choices count]; i++)
+    int score = 0;
+    NSLog(@"Choices nb : %d", [_choices count]);
+    for(int i=0; i < [_choices count]; i++)
     {
-        if([_choices objectAtIndex:i] == nil)
+        NSLog(@" %d", i);
+        if([[_choices objectAtIndex:i] isEqualToString:@""])
         {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Oups !" message:@"Please complete all the quiz before submit." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [message show];
@@ -44,14 +66,108 @@
             return;
         }
         
-        if((int)[_choices objectAtIndex:i] == [[_questions objectAtIndex:i] correctAnswer])
+        NSLog(@"Choice : %@", [_choices objectAtIndex:i]);
+        NSLog(@"Correct answer : %@", [NSString stringWithFormat:@"%d",[[_questions objectAtIndex:i] correctAnswer]]);
+        
+        if([[_choices objectAtIndex:i] isEqualToString:[NSString stringWithFormat:@"%d",[[_questions objectAtIndex:i] correctAnswer]]])
+        {
             score++;
+            NSLog(@"Good !");
+        }
+        
+        NSLog(@"Score %d", score);
     }
     
-    if(score == [_questions count])
-    {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Perfect !" message:@"All right !" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [message show];
+    score *= 5;
+
+        PFObject* userQuiz = [PFObject objectWithClassName:@"UserQuiz"];
+        
+        [userQuiz setObject:[NSString stringWithFormat:@"%d", score ] forKey:@"score"];
+        [userQuiz setObject:[[User currentUser] username] forKey:@"username"];
+        
+        [userQuiz saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(!error)
+            {
+                // Save user's relation.
+                PFUser *user = [PFUser currentUser];
+                PFRelation *userRelation = [user relationforKey:@"quizs"];
+                [userRelation addObject:userQuiz];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(!error)
+                    {
+                        // Update user's score.
+                        PFUser *user = [PFUser currentUser];
+                        int userScore = [[user objectForKey:@"score"] integerValue];
+                        userScore += score;
+                        [user setObject:[NSString stringWithFormat:@"%d", userScore] forKey:@"score"];
+                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if(!error)
+                            {
+                                UIAlertView *message = [[UIAlertView alloc]
+                                                        initWithTitle:@"Quiz saved with success"
+                                                        message:[NSString stringWithFormat:@"You got %d points.", score]
+                                                        delegate:nil
+                                                        cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                [message show];
+                                
+                                [self correctQuiz];
+                                /*
+                                // Save waypoint's relation.
+                                PFRelation *waypointRelation = [_waypoint relationforKey:@"quizs"];
+                                [waypointRelation addObject:userQuiz];
+                                [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if(!error)
+                                    {
+                                        UIAlertView *message = [[UIAlertView alloc]
+                                                                initWithTitle:@"Quiz saved with success"
+                                                                message:[NSString stringWithFormat:@"You got %d points.", score]
+                                                                delegate:nil
+                                                                cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                        [message show];
+
+                                    }
+                                    else
+                                        NSLog(@"Error while saving waypoint relation.");
+                                }];
+                                */
+                                                                
+                            }
+                            else
+                                NSLog(@"Error while saving user score.");
+                        }];
+                        
+                    }
+                    else
+                        NSLog(@"Error while saving user relation.");
+                }];
+                
+                
+            }
+        }];
+            }
+        }
+        }];
+
+}
+
+- (void)correctQuiz
+{
+    for(int i=0; i < [_choices count]; i++)
+    {        
+        NSLog(@"Choice : %@", [_choices objectAtIndex:i]);
+        NSLog(@"Correct answer : %@", [NSString stringWithFormat:@"%d",[[_questions objectAtIndex:i] correctAnswer]]);
+        UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        if([[_choices objectAtIndex:i] isEqualToString:[NSString stringWithFormat:@"%d",[[_questions objectAtIndex:i] correctAnswer]]])
+        {
+            
+            [[cell detailTextLabel] setTextColor:[UIColor greenColor]];
+            
+            NSLog(@"Good !");
+        }
+        else
+        {
+            [[cell detailTextLabel] setTextColor:[UIColor redColor]];
+        }
     }
 }
 
@@ -85,6 +201,7 @@
                      // Parse all objects.
                      _choices = [[NSMutableArray alloc] initWithCapacity:[objects count]];
                      _questions = [[NSMutableArray alloc] initWithCapacity:objects.count];
+                     NSLog(@"NB questions %d", [_choices count]);
                      for (int i = 0 ; i < [objects count] ; i++)
                      {
                          [_questions addObject:[[QuizQuestion alloc] initWithPFObject:[objects objectAtIndex:i]]];
@@ -157,9 +274,12 @@
         
         [detailViewController setQuestion:question];
         [detailViewController setQuestionNb:selectedRowIndex.row];
+        [detailViewController setParent:self];
         
         //Waypoint* waypoint = [_waypoints objectAtIndex:selectedRowIndex.row];
-        //NSLog(@"WP ID : %@", [waypoint objectId]);
+        
+        NSLog(@"Q ID : %@", [[detailViewController question] name]);
+        NSLog(@"Q NB : %d", [detailViewController questionNb]);
     }
 }
 

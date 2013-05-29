@@ -23,6 +23,7 @@
 {
     if ( self = [super init])
     {
+        self.objectId = [object objectId];
         _id = [object objectForKey:@"id"];
         _title = [object objectForKey:@"title"];
         _body = [object objectForKey:@"body"];

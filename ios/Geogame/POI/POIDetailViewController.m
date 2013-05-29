@@ -35,7 +35,7 @@
     [super viewDidLoad];
 	
     [_waypointNameLabel setText:[_waypoint name]];
-    [_waypointReferenceLabel setText:[_waypoint objectId]];
+    [_waypointReferenceLabel setText:[NSString stringWithFormat:@"%d points",[_waypoint points]]];
     [_waypointDescriptionTextView setText:[_waypoint description]];
     [_waypointImageView setImage:[UIImage imageWithData:[_waypoint picture]]];
     
@@ -213,6 +213,7 @@
                                     //NSLog(@"ID : %@", [_waypoint objectId]);
                                     PFRelation *waypointRelation = [_waypoint relationforKey:@"checkIns"];
                                     [waypointRelation addObject:checkIn];
+                                    
                                     [_waypoint saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                         if(!error)
                                         {
@@ -222,16 +223,29 @@
                                             score += [_waypoint points];
                                             
                                             [user setObject:[NSString stringWithFormat:@"%d", score] forKey:@"score"];
-                                            [user saveInBackground];
+                                            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                                if(!error)
+                                                {
+                                                    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                                                    [message show];
+                                                }
+                                                else
+                                                {
+                                                    NSLog(@"Error while CheckIn save (score).");
+                                                }
+                                            }];
                                             
-                                            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Check in with success" message:@"Your check-in succesfully." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                                            [message show];
+                                            
                                         }
                                         else
                                         {
-                                            NSLog(@"Error while CheckIn save.");
+                                            NSLog(@"Error while CheckIn save (waypoint relation).");
                                         }
                                     }];
+                                }
+                                else
+                                {
+                                    NSLog(@"Error while CheckIn save (user relation).");
                                 }
                             }];
                         }

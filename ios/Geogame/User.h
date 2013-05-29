@@ -25,10 +25,12 @@
     
     // User's published pictures.
     NSMutableArray* _pictures;
+    int _score;
 }
 
 @property(nonatomic, retain) NSString* firstname;
 @property(nonatomic, retain) NSString* lastname;
+@property(nonatomic) int score;
 @property(nonatomic, retain) NSDate* birthday;
 @property(nonatomic, retain) NSData* picture;
 @property(nonatomic) CLLocationCoordinate2D coordinate;
@@ -42,6 +44,8 @@
 - (void)retrieveFromCloud;
 
 - (void)loadCommentsInBackground;
+
+- (id)initWithPFObject:(PFObject*)object;
 
 + (User *)currentUser;
 

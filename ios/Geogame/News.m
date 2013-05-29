@@ -27,8 +27,8 @@
         _title = [object objectForKey:@"title"];
         _text = [object objectForKey:@"content"];
         _isEnabled = [[object objectForKey:@"isEnabled"] boolValue];
-        _createdAt = [object objectForKey:@"createdAt"];
-        _updatedAt = [object objectForKey:@"updatedAt"];
+        self.createdAt = [object createdAt];
+        self.updatedAt = [object updatedAt];
         
     }
     

@@ -19,6 +19,7 @@
 @synthesize lastname = _lastname;
 @synthesize firstname = _firstname;
 @synthesize coordinate = _coordinate;
+@synthesize score = _score;
 
 - (id)init
 {
@@ -52,6 +53,25 @@
     return [self objectForKey:@"birthday"];
 }
 */
+
+- (id)initWithPFObject:(PFObject *)object
+{
+    if(self = [super init])
+    {
+        _firstname = [object objectForKey:@"firstname"];
+        _lastname = [object objectForKey:@"lastname"];
+        self.username = [object objectForKey:@"username"];
+        _birthday = [object objectForKey:@"birthday"];
+        _score = [[object objectForKey:@"score"] integerValue];
+        CLLocationCoordinate2D coord;
+        PFGeoPoint *p = [object objectForKey:@"location" ];
+        coord.latitude = p.latitude;
+        coord.longitude = p.longitude;
+
+    }
+    
+    return self;
+}
 
 + (User *)currentUser;
 {

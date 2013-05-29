@@ -16,6 +16,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar
+     setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
+     forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -138,9 +143,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int correctAnswer = [_question correctAnswer];
-    int selectedAnswer = 0;
-    
     switch ([indexPath section])
     {
         case 0:
@@ -149,19 +151,24 @@
             switch (indexPath.row)
         {
             case 0:
-                
+                //[[_parent choices] insertObject:@"1" atIndex:_questionNb];
+                [[_parent choices] addObject:@"1"];
+                [[[[_parent tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_questionNb inSection:0]] detailTextLabel] setText:[_question answerA]];
                 break;
             case 1:
-                selectedAnswer = 1;
+                //[[_parent choices] insertObject:@"2" atIndex:_questionNb];
+                [[_parent choices] addObject:@"2"];
+                [[[[_parent tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_questionNb inSection:0]] detailTextLabel] setText:[_question answerB]];
                 break;
             case 2:
-                selectedAnswer = 2;
+                //[[_parent choices] insertObject:@"3" atIndex:_questionNb];
+                [[_parent choices] addObject:@"3"];
+                [[[[_parent tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_questionNb inSection:0]] detailTextLabel] setText:[_question answerC]];
                 break;
             case 3:
-                selectedAnswer = 3;
-                break;
-            case 4:
-                selectedAnswer = 4;
+                //[[_parent choices] insertObject:@"4" atIndex:_questionNb];
+                [[_parent choices] addObject:@"4"];
+                [[[[_parent tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_questionNb inSection:0]] detailTextLabel] setText:[_question answerD]];
                 break;
                 
             default:
@@ -171,15 +178,7 @@
             break;
     }
     
-    if (correctAnswer == selectedAnswer)
-    {
-        NSLog(@"Correct !");
-    }
-    
-    //[_parent lockQuestion:selectedAnswer];
-    
-    //QuizTableViewController* parent = (QuizTableViewController*) self.parentViewController;
-    //[[parent choices] setObject:[NSNumber numberWithInt:selectedAnswer] atIndexedSubscript:_questionNb];
+    NSLog(@"Choice : %@", [[_parent choices] objectAtIndex:_questionNb]);
     
     [self.navigationController popViewControllerAnimated:YES];
 }

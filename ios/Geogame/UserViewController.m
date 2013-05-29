@@ -16,7 +16,7 @@
 #import "UserCheckIn.h"
 #import "POICommentTableViewCell.h"
 #import "CheckInTableViewCell.h"
-
+#import <Parse/Parse.h>
 #import "Log.h"
 
 @implementation UserViewController
@@ -42,6 +42,11 @@
      setBackgroundImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]
      forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BgLeather.png"]];
+    
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"backgroundNavigationBar.png"]];
+    self.view.backgroundColor = background;
+    
+    _activityTableView.backgroundColor = background;
 
     // Create the log in view controller
     _logInViewController = [[LoginViewController alloc] init];
@@ -83,6 +88,9 @@
     imageView.image = [UIImage imageNamed:@"image-example.png"];
     imageView.file = (PFFile *)[user objectForKey:@"picture"];
     [imageView loadInBackground:^(UIImage *image, NSError *error) {
+        
+        
+        //[_imageView addSubview:[[UIImageView alloc] initWithImage:imageView.image]];
         [_imageView setImage:imageView.image];
         [_imageView reloadInputViews];
     }];
@@ -176,11 +184,15 @@
     {
         case 0:
             [_checkInsLabel setText:[NSString stringWithFormat:@"%lu check ins", (unsigned long)[_checkIns count]]];
+            if([_checkIns count] == 0)
+                return 1;
             return [_checkIns count];
             break;
             
         case 1:
             [_commentsLabel setText:[NSString stringWithFormat:@"%lu comments", (unsigned long)[_comments count]]];
+            if([_comments count] == 0)
+                return 1;
             return [_comments count];
             break;
             
@@ -190,10 +202,67 @@
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return YES;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+                
+        switch ([indexPath section]) {
+            case 0:
+            {
+                
+                PFRelation *userRelation = [[User currentUser] relationforKey:@"checkIns"];
+                [userRelation removeObject:[_checkIns objectAtIndex:indexPath.row]];
+                
+                [[User currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                {
+                    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Success !" message:@"Check in deleted with success." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                    [message show];
+                    return;
+                }];
+                
+                
+                
+                [_checkIns removeObjectAtIndex:indexPath.row];
+                
+                [self loadUserCheckInsInBackground];
+                
+                break;
+            }
+                
+            case 1:
+            {
+                PFRelation *userRelation = [[User currentUser] relationforKey:@"comments"];
+                [userRelation removeObject:[_comments objectAtIndex:indexPath.row]];
+                
+                //int score = [[User currentUser] score] - 1;
+                //[[User currentUser] setObject:[NSString stringWithFormat:@"%d",score ] forKey:@"score"];
+                
+                [[User currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                 {
+                     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Success !" message:@"Check in deleted with success." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                     [message show];
+                     return;
+                 }];
+                
+                
+                
+                [_comments removeObjectAtIndex:indexPath.row];
+                
+                [self loadUserCommentsInBackground];
+                
+                break;
+
+            }
+                
+            default:
+                break;
+        }
+    }
+}
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -221,8 +290,10 @@
             break;
             
         case 1:
+        {
             return 200.0f;
             break;
+        }
             
         default:
             return 0;
@@ -234,38 +305,71 @@
 {
     switch([indexPath section])
     {
+            
         case 0:
         {
-            static NSString *CellIdentifier = @"CheckInCell";
-            CheckInTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            if([_checkIns count] > 0)
+            {
             
-            if (cell == nil)
-                cell = [[CheckInTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                static NSString *CellIdentifier = @"CheckInCell";
+                CheckInTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
-            UserCheckIn* checkIn = [_checkIns objectAtIndex:indexPath.row];
-            [[cell titleLabel] setText:[checkIn title]];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"dd/MM/yyyy"];
-            NSString *stringFromDate = [formatter stringFromDate:[checkIn createdAt]];
-            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
+                if (cell == nil)
+                    cell = [[CheckInTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
             
-            return cell;
+                UserCheckIn* checkIn = [_checkIns objectAtIndex:indexPath.row];
+                [[cell titleLabel] setText:[checkIn title]];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"dd/MM/yyyy"];
+                NSString *stringFromDate = [formatter stringFromDate:[checkIn createdAt]];
+                [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
+                
+                return cell;
+            
+            }
+            else
+            {
+                static NSString *CellIdentifier = @"EmptyCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                
+                if (cell == nil)
+                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                
+                [[cell textLabel] setText:@"Not check in ..."];
+                
+                return cell;
+            }
         }
 
         case 1:
         {
-            static NSString *CellIdentifier = @"CommentCell";
-            POICommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            if([_comments count] > 0)
+            {
+                static NSString *CellIdentifier = @"CommentCell";
+                POICommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
-            UserComment* comment = [_comments objectAtIndex:indexPath.row];
-            [[cell titleLabel] setText:[comment title]];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"dd/MM/yyyy"];
-            NSString *stringFromDate = [formatter stringFromDate:[comment createdAt]];
-            [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
-            [[cell textView] setText:[comment body]];
+                UserComment* comment = [_comments objectAtIndex:indexPath.row];
+                [[cell titleLabel] setText:[comment title]];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"dd/MM/yyyy"];
+                NSString *stringFromDate = [formatter stringFromDate:[comment createdAt]];
+                [[cell dateLabel] setText:[NSString stringWithFormat:@"%@",stringFromDate]];
+                [[cell textView] setText:[comment body]];
             
-            return cell;
+                return cell;
+            }
+            else
+            {
+                static NSString *CellIdentifier = @"EmptyCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                
+                if (cell == nil)
+                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+                
+                [[cell textLabel] setText:@"Not comments ..."];
+                
+                return cell;
+            }
         }
             
     default:
